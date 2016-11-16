@@ -20,7 +20,7 @@ public class Item {
 		 */
 		this.name = name;
 		this.price = price;
-		this.type = null;
+		this.type = new ArrayList<>();
 	}
 	
 	public Item(String name, double price, ArrayList<String> type){

@@ -14,6 +14,7 @@ public class MyFoodora {
 	private ArrayList<Courier> couriers;
 	private ArrayList<Customer> customers;
 	private ArrayList<Order> historyOfOrders;
+	private DeliveryPolicy deliveryPolicy;
 	private double serviceFee;
 	private double markupPercentage;
 	private double deliveryCost;
@@ -28,6 +29,7 @@ public class MyFoodora {
 		couriers = new ArrayList<>();
 		customers = new ArrayList<>();
 		historyOfOrders = new ArrayList<>();
+		deliveryPolicy = new DeliveryPolicyFastest(this);
 		
 	}
 	
@@ -105,6 +107,32 @@ public class MyFoodora {
 		}
 	}
 	
+	/**
+	 * This function finds an available and volunteer courier to deliver the order o.
+	 * @param o the order to be delivered
+	 * @return c the courier that will take the delivery
+	 */
+	public Courier findAvailableCourier(Order o){
+		ArrayList<Courier> couriersSearch = new ArrayList<>();
+		//We need to make sure the courier is volunteer, so we need to search for the best available courier until one accepts the delivery
+		couriersSearch.addAll(couriers);
+		Courier c = null;
+		
+		//while we have couriers left
+		while(!couriersSearch.isEmpty()){
+			c = deliveryPolicy.findAvailableCourier(o, couriersSearch);
+			if(c == null || c.acceptDelivery(o)){
+				break;
+			}
+			//if the courier refuses the delivery, we keep searching for another one
+			couriersSearch.remove(c);
+		}
+		if(c == null){
+			System.out.println("No courier was found for this delivery");
+		}
+		return c;
+	}
+	
 	public ArrayList<Manager> getManagers() {
 		return managers;
 	}
@@ -149,6 +177,10 @@ public class MyFoodora {
 	
 	public ArrayList<Order> getHistoryOfOrders() {
 		return historyOfOrders;
+	}
+	
+	public void setDeliveryPolicy(DeliveryPolicy dp){
+		deliveryPolicy = dp;
 	}
 
 }

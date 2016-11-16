@@ -8,12 +8,32 @@ import java.util.HashSet;
 import org.junit.Test;
 
 public class RestaurantTest {
-
-	Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(1,1));
+	MyFoodora sys = new MyFoodora();
+	Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(1,1), sys);
 	
 	@Test
 	public void testMakeNewMeal() {
-		fail("Not yet implemented");
+		ArrayList<String> type = new ArrayList<>();
+		type.add("vegetarian");
+		
+		Item i1 = new Item("Salad", 2, type);
+		Item i2 = new Item("Pasta", 2, type);
+		
+		ArrayList<Item> items = new ArrayList<>();
+		items.add(i1);
+		items.add(i2);
+		
+		Meal m1 = ru.makeNewMeal(items, true);
+		Meal m2 = MealFactory.createMeal(items, 3.6, type, true);
+		
+		assertEquals(m2.getPrice(), m1.getPrice(), 1e-6);
+		assertEquals(m1.getItems(), m2.getItems());
+		
+		HashSet<String> type1 = new HashSet<>(m1.getType());
+		HashSet<String> type2 = new HashSet<>(m2.getType());
+		
+		assertEquals(type1, type2);
+		
 	}
 
 	@Test

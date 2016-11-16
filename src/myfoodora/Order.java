@@ -20,14 +20,17 @@ public class Order {
 		this.price = computeCost();
 	}
 	
+	/**
+	 * Computes the cost of the order according to :
+	 * price = price_of_order (set by restaurant, including discounts like meal of the week) 
+	 * + serviceFee (set by the system) 
+	 * + price_of_order * markup_percentage
+	 * - discount due to fidelity cards
+	 * @return the cost of the order
+	 */
+	
 	public double computeCost(){
-		/**
-		 * Computes the cost of the order according to :
-		 * price = price_of_order (set by restaurant, including discounts like meal of the week) 
-		 * + serviceFee (set by the system) 
-		 * + price_of_order * markup_percentage
-		 * - discount due to fidelity cards
-		 */
+		
 		double priceOfOrder = 0;
 		double total = 0;
 		
@@ -42,6 +45,44 @@ public class Order {
 		
 		return total;
 	}
+	
+	/**
+	 * This function creates an example of order. We use it in tests because creating an order from scratch is quite time-consuming.
+	 * @return an order containing various items and meals.
+	 */
+	public static Order exampleOfOrder(Customer customer, Restaurant restaurant, MyFoodora sys){
+		
+		ArrayList<String> type1 = new ArrayList<>();
+		ArrayList<String> type2 = new ArrayList<>();
+		
+		//various types for items
+		type1.add("vegetarian");
+		type1.add("homemade");
+		type2.add("vegetarian");
+		
+		Item i1 = new Item("Salad", 3, type1);
+		Item i2 = new Item("Rice", 2, type2);
+		Item i3 = new Item("Cake", 4);
+		Item i4 = new Item("Bread", 1, type1); 
+		
+		
+		ArrayList<Item> i = new ArrayList<>();
+		i.add(i1);
+		i.add(i2);
+		i.add(i3);
+		
+		Meal m = restaurant.makeNewMeal(i, true);
+		
+		ArrayList<Item> items = new ArrayList<>();
+		ArrayList<Meal> meals = new ArrayList<>();
+		
+		items.add(i1);
+		items.add(i4);
+		
+		meals.add(m);
+		
+		return new Order(items, meals, customer, restaurant, sys);
+	}
 
 	public Customer getCustomer() {
 		return customer;
@@ -49,6 +90,14 @@ public class Order {
 
 	public Restaurant getRestaurant() {
 		return restaurant;
+	}
+
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+
+	public ArrayList<Meal> getMeals() {
+		return meals;
 	}
 	
 	

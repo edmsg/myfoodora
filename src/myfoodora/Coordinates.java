@@ -9,6 +9,15 @@ public class Coordinates {
 		this.y = y;
 	}
 	
+	/**
+	 * Computes the euclidian distance between this object and point
+	 * @param point : the point we want to get the distance from
+	 * @return distance from this object to point
+	 */
+	public double distance(Coordinates point){
+		return Math.sqrt(Math.pow(this.x - point.getX(), 2) + Math.pow(this.y - point.getY(), 2));
+	}
+	
 	
 	public double getX() {
 		return x;

@@ -8,9 +8,9 @@ import org.junit.Test;
 
 public class CustomerTest {
 	
-	private MyFoodora syst = new MyFoodora();
-	private Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, syst);
-	private Restaurant ru = new Restaurant("leRu", "Restaurant Universitaire", new Coordinates(3,3));
+	private MyFoodora sys = new MyFoodora();
+	private Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+	private Restaurant ru = new Restaurant("leRu", "Restaurant Universitaire", new Coordinates(3,3), sys);
 	
 	@Test
 	public void testMakeOrder() {
@@ -38,7 +38,7 @@ public class CustomerTest {
 		Order o = antho.makeOrder(items, meals, ru);
 		
 		
-		assertEquals(o, syst.getHistoryOfOrders().get(0));
+		assertEquals(o, sys.getHistoryOfOrders().get(0));
 	}
 
 }

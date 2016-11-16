@@ -7,54 +7,49 @@ package myfoodora;
  */
 
 public class Manager extends User{
-	private MyFoodora sys; //link to the system
 	private String name;
 	private String surname;
 	
 	public Manager(String username, String name, String surname, MyFoodora sys){
-		super(username);
+		super(username, sys);
 		this.name = name;
 		this.surname = surname;
-		this.sys = sys;
 		sys.addUser(this); //the manager is automatically added to the manager list of the system
 	}
 	
 	public Manager addManager(String username, String name, String surname){
-		return new Manager(username, name, surname, sys); //the manager is automatically added to the system through its construction : no need to add it a second time
+		return new Manager(username, name, surname, getSys()); //the manager is automatically added to the system through its construction : no need to add it a second time
 	}
 	
 	public Restaurant addRestaurant(String username, String name, Coordinates address){
-		Restaurant r = new Restaurant(username, name, address);
-		sys.addUser(r);
+		Restaurant r = new Restaurant(username, name, address, getSys());
 		return r;
 	}
 	
 	public Courier addCourier(String username, String name, String surname, long phoneNumber){
-		Courier c = new Courier(username, name, surname, phoneNumber);
-		sys.addUser(c);
+		Courier c = new Courier(username, name, surname, phoneNumber, getSys());
 		return c;
 	}
 	
 	public Customer addCustomer(String username, String name, String surname, Coordinates address, String email, long phoneNumber){
-		Customer c = new Customer(username, name, surname, address, email, phoneNumber, sys);
-		sys.addUser(c);
+		Customer c = new Customer(username, name, surname, address, email, phoneNumber, getSys());
 		return c;
 	}
 	
 	public void removeUser(User u){
-		sys.removeUser(u);
+		getSys().removeUser(u);
 	}
 	
 	
 
 	public void setServiceFee(double serviceFee) {
-		sys.setServiceFee(serviceFee);
+		getSys().setServiceFee(serviceFee);
 	}
 	public void setMarkupPercentage(double markupPercentage) {
-		sys.setMarkupPercentage(markupPercentage);
+		getSys().setMarkupPercentage(markupPercentage);
 	}
 	public void setDeliveryCost(double deliveryCost) {
-		sys.setDeliveryCost(deliveryCost);
+		getSys().setDeliveryCost(deliveryCost);
 	}
 	
 

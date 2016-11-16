@@ -36,6 +36,10 @@ public abstract class Meal {
 		return price;
 	}
 	
+	public ArrayList<String> getType() {
+		return type;
+	}
+
 	public void setPrice(double price){
 		this.price = price;
 	}

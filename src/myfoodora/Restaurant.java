@@ -8,14 +8,17 @@ public class Restaurant extends User {
 	private Menu menu;
 	private double genericDiscountFactor;
 	private double specialDiscountFactor;
+	private ArrayList<Order> ordersToComplete;
 	
-	public Restaurant(String username, String name, Coordinates address){
-		super(username);
+	public Restaurant(String username, String name, Coordinates address, MyFoodora sys){
+		super(username, sys);
 		this.name = name;
 		this.address = address;
 		this.menu = new Menu();
 		genericDiscountFactor = 0.05;
 		specialDiscountFactor = 0.1;
+		ordersToComplete = new ArrayList<>();
+		sys.addUser(this);
 	}
 	
 	public Meal makeNewMeal(ArrayList<Item> items, boolean mealOfTheWeek){
@@ -74,6 +77,21 @@ public class Restaurant extends User {
 		return result;
 	}
 
+	
+	
+	public void receiveOrder(Order o){
+		ordersToComplete.add(o);
+	}
+	
+	public void orderCompleted(Order o){
+		ordersToComplete.remove(o);
+	}
+	
+	
+	public Coordinates getAddress() {
+		return address;
+	}
+
 	public void setGenericDiscountFactor(double genericDiscountFactor) {
 		this.genericDiscountFactor = genericDiscountFactor;
 	}
@@ -81,5 +99,7 @@ public class Restaurant extends User {
 	public void setSpecialDiscountFactor(double specialDiscountFactor) {
 		this.specialDiscountFactor = specialDiscountFactor;
 	}
+	
+	
 	
 }
