@@ -39,21 +39,33 @@ public class MyFoodoraTest {
 
 	@Test
 	public void testFindAvailableCourier() {
+		DeliveryPolicy dpfast = new DeliveryPolicyFastest(sys);
+		DeliveryPolicy dpfair = new DeliveryPolicyFairOccupation(sys);
+		
 		Order o = Order.exampleOfOrder(antho, ru, sys);
 		jodev.setPosition(new Coordinates(1, 1));
 		alex.setPosition(new Coordinates(2, 1));
 		yvan.setPosition(new Coordinates(0, 1));
 		
+		yvan.setCounter(0);
+		alex.setCounter(3);
+		jodev.setCounter(5);
+		
 		yvan.setAvailable(false);
 		
+		//jodev is the closest available courier
+		sys.setDeliveryPolicy(dpfast);
+		assertEquals(sys.findAvailableCourier(o), jodev);
 		
+		//alex is the available courier with the lowest number of deliveries
+		sys.setDeliveryPolicy(dpfair);
 		assertEquals(sys.findAvailableCourier(o), alex);
+		
 		
 		
 		yvan.setAvailable(false);
 		alex.setAvailable(false);
 		jodev.setAvailable(false);
-		
 		assertEquals(sys.findAvailableCourier(o), null);
 		
 	}

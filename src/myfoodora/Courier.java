@@ -23,8 +23,9 @@ public class Courier extends User {
 	public boolean acceptDelivery(Order o){
 		//TODO : create a routine to allow the courier to refuse the delivery
 		boolean accept = true;
-		if(name.equals("Joseph")){
-			accept = false;
+		if(accept){
+			//we keep a track of the number of orders delivered
+			counter++;
 		}
 		return accept;
 	}
@@ -42,6 +43,10 @@ public class Courier extends User {
 
 	public int getCounter() {
 		return counter;
+	}
+	
+	public void setCounter(int counter){
+		this.counter = counter;
 	}
 	
 	public boolean isAvailable() {
