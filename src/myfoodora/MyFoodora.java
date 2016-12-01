@@ -15,6 +15,7 @@ public class MyFoodora {
 	private ArrayList<Customer> customers;
 	private ArrayList<Order> historyOfOrders;
 	private DeliveryPolicy deliveryPolicy;
+	private ProfitPolicy profitPolicy;
 	private double serviceFee;
 	private double markupPercentage;
 	private double deliveryCost;
@@ -30,7 +31,7 @@ public class MyFoodora {
 		customers = new ArrayList<>();
 		historyOfOrders = new ArrayList<>();
 		deliveryPolicy = new DeliveryPolicyFastest(this);
-		
+		profitPolicy = new TargetProfitDeliveryCost(this);
 	}
 	
 	
@@ -182,5 +183,14 @@ public class MyFoodora {
 	public void setDeliveryPolicy(DeliveryPolicy dp){
 		deliveryPolicy = dp;
 	}
+	
+	public void setProfitPolicy(ProfitPolicy pp){
+		profitPolicy = pp;
+	}
+
+	public ProfitPolicy getProfitPolicy() {
+		return profitPolicy;
+	}
+	
 
 }

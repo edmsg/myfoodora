@@ -1,6 +1,7 @@
 package myfoodora;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Order {
 	private MyFoodora sys;
@@ -9,6 +10,9 @@ public class Order {
 	private Customer customer;
 	private Restaurant restaurant;
 	private double price;
+	private double dueToRestaurant;
+	private double discountDueToCards = 0;
+	private Calendar date;
 	
 	public Order(ArrayList<Item> items, ArrayList<Meal> meals, Customer customer, Restaurant restaurant, MyFoodora sys){
 		this.items = items;
@@ -16,8 +20,23 @@ public class Order {
 		this.customer = customer;
 		this.restaurant = restaurant;
 		this.sys = sys;
+		this.date = Calendar.getInstance();
 		
+		this.dueToRestaurant = computeDueToRestaurant();
 		this.price = computeCost();
+	}
+	
+	public double computeDueToRestaurant(){
+		double priceOfOrder = 0;
+		
+		for(Item i : items){
+			priceOfOrder += i.getPrice();
+		}
+		for(Meal m : meals){
+			priceOfOrder += m.getPrice();
+		}
+		
+		return priceOfOrder;
 	}
 	
 	/**
@@ -30,18 +49,9 @@ public class Order {
 	 */
 	
 	public double computeCost(){
-		
-		double priceOfOrder = 0;
-		double total = 0;
-		
-		for(Item i : items){
-			priceOfOrder += i.getPrice();
-		}
-		for(Meal m : meals){
-			priceOfOrder += m.getPrice();
-		}
-		
-		total = priceOfOrder*(1 + sys.getMarkupPercentage()) + sys.getServiceFee(); //TODO :  - discount due to cards
+
+		double total = this.dueToRestaurant*(1 + sys.getMarkupPercentage()) + sys.getServiceFee(); //TODO :  - discount due to cards
+		//TODO : s'il y a une reduction à cause d'une carte de fidelité, mettre à jour le champ discountDueToCards (besoin de lui ailleurs)
 		
 		return total;
 	}
@@ -98,6 +108,22 @@ public class Order {
 
 	public ArrayList<Meal> getMeals() {
 		return meals;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public double getDueToRestaurant() {
+		return dueToRestaurant;
+	}
+
+	public double getDiscountDueToCards() {
+		return discountDueToCards;
+	}
+
+	public Calendar getDate() {
+		return date;
 	}
 	
 	

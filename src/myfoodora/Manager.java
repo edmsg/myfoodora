@@ -1,5 +1,7 @@
 package myfoodora;
 
+import java.util.ArrayList;
+
 /**
  * Managers oversee the system. They add/remove users and set the general parameters of the system.
  * @author benjamin
@@ -38,6 +40,35 @@ public class Manager extends User{
 	
 	public void removeUser(User u){
 		getSys().removeUser(u);
+	}
+	
+	public double computeTotalIncome(){
+		//TODO : add time period parameter
+		ArrayList<Order> historyOfOrder = this.getSys().getHistoryOfOrders();
+		double income = 0;
+		for(Order o : historyOfOrder){
+			income += o.getPrice();
+		}
+		return income;
+	}
+	
+	public double computeTotalProfit(){
+		//TODO : add time period parameter
+		ArrayList<Order> historyOfOrder = this.getSys().getHistoryOfOrders();
+		double profit = 0;
+		for(Order o : historyOfOrder){
+			profit += o.getPrice() - o.getDueToRestaurant() - getSys().getDeliveryCost();
+		}
+		
+		return profit;
+	}
+	
+	public void setProfitVariablesToMeetTargetProfit(double targetProfit){
+		getSys().getProfitPolicy().computeVariablesToTargetProfit(targetProfit);
+	}
+	
+	public void setProfitPolicy(ProfitPolicy pp){
+		getSys().setProfitPolicy(pp);
 	}
 	
 	
