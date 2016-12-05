@@ -8,17 +8,20 @@ import java.util.ArrayList;
  *
  */
 
-public class MyFoodora {
+public class MyFoodora implements Observable {
 	private ArrayList<Manager> managers;
 	private ArrayList<Restaurant> restaurants;
 	private ArrayList<Courier> couriers;
 	private ArrayList<Customer> customers;
 	private ArrayList<Order> historyOfOrders;
+	private ArrayList<User> inactiveUsers; //to store the users that were turned to inactive by a manager
+	private ArrayList<Observer> listenersSpecialOffers; //store the users that are interested in receiving new offers
 	private DeliveryPolicy deliveryPolicy;
 	private ProfitPolicy profitPolicy;
-	private double serviceFee;
-	private double markupPercentage;
-	private double deliveryCost;
+	private SortingPolicy sortingPolicy;
+	private double serviceFee = 2;
+	private double markupPercentage = .1;
+	private double deliveryCost = 1;
 	
 	
 	
@@ -30,8 +33,11 @@ public class MyFoodora {
 		couriers = new ArrayList<>();
 		customers = new ArrayList<>();
 		historyOfOrders = new ArrayList<>();
+		inactiveUsers = new ArrayList<>();
+		listenersSpecialOffers = new ArrayList<>();
 		deliveryPolicy = new DeliveryPolicyFastest(this);
 		profitPolicy = new TargetProfitDeliveryCost(this);
+		sortingPolicy = new SortingPolicyHalfMeal(false, this);
 	}
 	
 	
@@ -54,7 +60,7 @@ public class MyFoodora {
 		}
 		else{
 			//No available courier
-			//TODO : notify the client
+			//TODO : wait until an available one is found
 			
 		}
 		
@@ -148,6 +154,31 @@ public class MyFoodora {
 		return c;
 	}
 	
+	public void storeInactiveUser(User u){
+		inactiveUsers.add(u);
+	}
+	
+	@Override
+	public void registerObserver(Observer o){
+		if(!listenersSpecialOffers.contains(o)){
+			listenersSpecialOffers.add(o);
+		}
+	}
+	
+	@Override
+	public void removeObserver(Observer o){
+		if(listenersSpecialOffers.contains(o)){
+			listenersSpecialOffers.remove(o);
+		}
+	}
+	
+	@Override
+	public void notifyObservers(String message){
+		for(Observer o : listenersSpecialOffers){
+			o.update(message);
+		}
+	}
+	
 	public ArrayList<Manager> getManagers() {
 		return managers;
 	}
@@ -164,7 +195,6 @@ public class MyFoodora {
 
 		return customers;
 	}
-
 	
 	public double getServiceFee() {
 		return serviceFee;
@@ -205,6 +235,27 @@ public class MyFoodora {
 	public ProfitPolicy getProfitPolicy() {
 		return profitPolicy;
 	}
+
+	public ArrayList<User> getInactiveUsers() {
+		return inactiveUsers;
+	}
+
+
+	public SortingPolicy getSortingPolicy() {
+		return sortingPolicy;
+	}
+
+
+	public void setSortingPolicy(SortingPolicy sortingPolicy) {
+		this.sortingPolicy = sortingPolicy;
+	}
+
+	public ArrayList<Observer> getListenersSpecialOffers() {
+		return listenersSpecialOffers;
+	}
+	
+	
+	
 	
 
 }

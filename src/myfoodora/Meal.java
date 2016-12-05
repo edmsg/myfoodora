@@ -17,13 +17,13 @@ public abstract class Meal {
 	private double price;
 	private ArrayList<Item> items;
 	private ArrayList<String> type;
-	private boolean MealOfTheWeek;
+	private boolean mealOfTheWeek;
 	
 	
 	
 	public Meal(ArrayList<Item> items, double price, ArrayList<String> type, boolean mealOfTheWeek){
 		this.items = items;
-		this.MealOfTheWeek = mealOfTheWeek;
+		this.mealOfTheWeek = mealOfTheWeek;
 		this.type = type;
 		this.price = price;
 	}
@@ -43,5 +43,13 @@ public abstract class Meal {
 	public void setPrice(double price){
 		this.price = price;
 	}
+	
+	public void setMealOfTheWeek(boolean mealOfTheWeek) {
+		this.mealOfTheWeek = mealOfTheWeek;
+		
+	}
+
+	@Override
+	public abstract String toString();
 
 }

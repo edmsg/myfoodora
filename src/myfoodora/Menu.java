@@ -134,6 +134,17 @@ public class Menu {
 		
 		return s;
 	}
+	
+	/**
+	 * Returns all the items "a la carte", without distinction between starters, main dishes and desserts
+	 */
+	public ArrayList<Item> getItems() {
+		ArrayList<Item> result = new ArrayList<>();
+		result.addAll(starters);
+		result.addAll(mainDishes);
+		result.addAll(desserts);
+		return result;
+	}
 
 	public ArrayList<Item> getStarters() {
 		return starters;
@@ -150,5 +161,7 @@ public class Menu {
 	public ArrayList<Meal> getMeals() {
 		return meals;
 	}
+	
+	
 	
 }

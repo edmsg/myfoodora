@@ -109,15 +109,36 @@ public class Restaurant extends User {
 		ordersToComplete.add(o);
 		counter++;
 		for(Meal m : o.getMeals()){
-			mealCounter.put(m, mealCounter.get(m) + 1);
+			if(mealCounter.containsKey(m)){
+				mealCounter.put(m, mealCounter.get(m) + 1);
+			}
+			else{
+				mealCounter.put(m, 1);
+			}
 		}
 		for(Item i : o.getItems()){
-			itemCounter.put(i, itemCounter.get(i) + 1);
+			if(itemCounter.containsKey(i)){
+				itemCounter.put(i, itemCounter.get(i) + 1);
+			}
+			else{
+				itemCounter.put(i, 0);
+			}
 		}
 	}
 	
 	public void orderCompleted(Order o){
 		ordersToComplete.remove(o);
+	}
+	
+	public void setMealOfTheWeek(Meal m){
+		m.setMealOfTheWeek(true);
+		m.setPrice(computeMealPrice(m.getItems(), true));
+		getSys().notifyObservers("New offer from the restaurant " + name + " : " + m.toString() + " is now meal of the week.");
+	}
+	
+	public void setNotMealOfTheWeek(Meal m){
+		m.setMealOfTheWeek(false);
+		m.setPrice(computeMealPrice(m.getItems(), false));
 	}
 	
 	
@@ -143,6 +164,10 @@ public class Restaurant extends User {
 
 	public HashMap<Item, Integer> getItemCounter() {
 		return itemCounter;
+	}
+
+	public Menu getMenu() {
+		return menu;
 	}
 	
 	

@@ -162,5 +162,47 @@ public class ManagerTest {
 		assertEquals(jodev, john.mostActiveCourier());
 		assertEquals(yvan, john.leastActiveCourier());
 	}
+	
+	@Test
+	public void testAverageIncome(){
+		Customer antho1 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Customer antho2 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Customer antho3 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
+		
+		
+		Order a = Order.exampleOfOrder(antho1, ru, sys);
+		Order b = Order.exampleOfOrder(antho1, ru, sys);
+		Order c = Order.exampleOfOrder(antho2, ru, sys);
+		
+		sys.getHistoryOfOrders().add(a);
+		sys.getHistoryOfOrders().add(b);
+		sys.getHistoryOfOrders().add(c);
+		
+		antho1.receiveConfirmation(a);
+		antho1.receiveConfirmation(b);
+		antho2.receiveConfirmation(c);
+		
+		
+		assertEquals(22.965, john.computeAverageIncomePerCustomer(), 1e-6);
+	}
+	
+	@Test
+	public void testActivateInactivateUser(){
+		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		assertEquals(1, sys.getCustomers().size());
+		assertEquals(0, sys.getInactiveUsers().size());
+		
+		//let's inactivate antho
+		john.inactivateUser(antho);
+		assertEquals(0, sys.getCustomers().size());
+		assertEquals(1, sys.getInactiveUsers().size());
+		
+		//let's reactivate antho
+		john.activateUser(sys.getInactiveUsers().get(0));
+		sys.getInactiveUsers().remove(0);
+		assertEquals(1, sys.getCustomers().size());
+		assertEquals(0, sys.getInactiveUsers().size());
+	}
 
 }

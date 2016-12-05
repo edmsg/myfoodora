@@ -29,7 +29,10 @@ public class Item {
 		this.type = type;
 	}
 	
-	
+	@Override
+	public String toString(){
+		return name + ", for " + price;
+	}
 	
 	public String getName() {
 		return name;
