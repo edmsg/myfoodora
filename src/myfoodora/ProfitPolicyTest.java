@@ -2,6 +2,8 @@ package myfoodora;
 
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
+
 import org.junit.Test;
 
 public class ProfitPolicyTest {
@@ -15,20 +17,64 @@ public class ProfitPolicyTest {
 	public void testComputeDeliveryPolicy() {
 		Order o = Order.exampleOfOrder(antho, ru, sys);
 		
+		antoine.setMarkupPercentage(.1);
+		antoine.setServiceFee(1);
+		
 		sys.getHistoryOfOrders().add(o);
 		sys.getHistoryOfOrders().add(o);
 		sys.getHistoryOfOrders().add(o);
 		sys.getHistoryOfOrders().add(o);
+		
 		
 		TargetProfitDeliveryCost tpdc = new TargetProfitDeliveryCost(sys);
 		
-		
 		antoine.setProfitPolicy(tpdc);
-		antoine.setProfitVariablesToMeetTargetProfit(10);
+		antoine.setProfitVariablesToMeetTargetProfit(8);
 		
-		System.out.println(sys.getDeliveryCost());
-		
+		assertEquals(.21, sys.getDeliveryCost(), 1e-6);
 		
 	}
 
+	@Test
+	public void testComputeServiceFee() {
+		Order o = Order.exampleOfOrder(antho, ru, sys);
+		
+		antoine.setMarkupPercentage(.1);
+		antoine.setDeliveryCost(.21);
+		
+		sys.getHistoryOfOrders().add(o);
+		sys.getHistoryOfOrders().add(o);
+		sys.getHistoryOfOrders().add(o);
+		sys.getHistoryOfOrders().add(o);
+		
+		
+		TargetProfitServiceFee tpsf = new TargetProfitServiceFee(sys);
+		
+		antoine.setProfitPolicy(tpsf);
+		antoine.setProfitVariablesToMeetTargetProfit(8);
+		
+		assertEquals(1, sys.getDeliveryCost(), 1e-6);
+	}
+	
+	
+	@Test
+	public void testComputeMarkupPercentage() {
+		Order o = Order.exampleOfOrder(antho, ru, sys);
+		
+		antoine.setServiceFee(1);
+		antoine.setDeliveryCost(.21);
+		
+		sys.getHistoryOfOrders().add(o);
+		sys.getHistoryOfOrders().add(o);
+		sys.getHistoryOfOrders().add(o);
+		
+		
+		TargetProfitMarkupPercentage tpmk = new TargetProfitMarkupPercentage(sys);
+		
+		antoine.setProfitPolicy(tpmk);
+		antoine.setProfitVariablesToMeetTargetProfit(8);
+		
+		assertEquals(.1, sys.getDeliveryCost(), 1e-6);
+	}
+	
 }

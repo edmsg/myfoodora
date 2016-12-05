@@ -25,4 +25,9 @@ public class Customer extends User {
 		getSys().newOrder(o);
 		return o;
 	}
+	
+	public void receiveConfirmation(Order o){
+		//TODO : que faire ?
+		System.out.println("The order is confirmed and will be delivered soon.");
+	}
 }

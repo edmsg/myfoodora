@@ -44,7 +44,21 @@ public class MyFoodora {
 		 * OK - save to history
 		 */
 		
-		historyOfOrders.add(o);
+		Courier c = findAvailableCourier(o);
+		
+		if(c != null){
+			o.setCourier(c);
+			historyOfOrders.add(o);
+			o.getRestaurant().receiveOrder(o);
+			o.getCustomer().receiveConfirmation(o);
+		}
+		else{
+			//No available courier
+			//TODO : notify the client
+			
+		}
+		
+		
 	}
 	
 	

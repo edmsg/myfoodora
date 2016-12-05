@@ -10,6 +10,8 @@ import org.junit.Test;
 public class RestaurantTest {
 	MyFoodora sys = new MyFoodora();
 	Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(1,1), sys);
+	Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+
 	
 	@Test
 	public void testMakeNewMeal() {
@@ -88,6 +90,26 @@ public class RestaurantTest {
 		setExpected.add("homemade");
 		
 		assertEquals(setResult, setExpected);
+	}
+	
+	@Test
+	public void testCounterItemAndMeal(){
+		Order o = Order.exampleOfOrder(antho, ru, sys);
+		
+		for(Item i : o.getItems()){
+			ru.addItemToMenu(i, "s");
+		}
+		for(Meal m : o.getMeals()){
+			ru.addMealToMenu(m);
+		}
+		
+		ru.receiveOrder(o);
+		ru.receiveOrder(o);
+		
+		assertEquals((Integer) 2, ru.getItemCounter().get(o.getItems().get(0)));
+		assertEquals((Integer) 2, ru.getMealCounter().get(o.getMeals().get(0)));
+		
+		
 	}
 
 }

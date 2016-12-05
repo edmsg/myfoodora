@@ -26,6 +26,7 @@ public class Courier extends User {
 		if(accept){
 			//we keep a track of the number of orders delivered
 			counter++;
+			isAvailable = false;
 		}
 		return accept;
 	}

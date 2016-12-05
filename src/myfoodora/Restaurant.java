@@ -1,14 +1,18 @@
 package myfoodora;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Restaurant extends User {
 	private String name;
 	private Coordinates address;
 	private Menu menu;
+	private int counter = 0; //counter of the number of orders sold
 	private double genericDiscountFactor;
 	private double specialDiscountFactor;
 	private ArrayList<Order> ordersToComplete;
+	private HashMap<Meal, Integer> mealCounter; //stores the number of time each meal has been ordered
+	private HashMap<Item, Integer> itemCounter; //stores the number of time each item has been ordered
 	
 	public Restaurant(String username, String name, Coordinates address, MyFoodora sys){
 		super(username, sys);
@@ -18,6 +22,8 @@ public class Restaurant extends User {
 		genericDiscountFactor = 0.05;
 		specialDiscountFactor = 0.1;
 		ordersToComplete = new ArrayList<>();
+		mealCounter = new HashMap<>();
+		itemCounter = new HashMap<>();
 		sys.addUser(this);
 	}
 	
@@ -76,11 +82,38 @@ public class Restaurant extends User {
 		}
 		return result;
 	}
+	
+	public void addMealToMenu(Meal m){
+		menu.addMeal(m);
+		mealCounter.put(m, 0);
+	}
+	
+	public void removeMealFromMenu(Meal m){
+		menu.removeMeal(m);
+		mealCounter.remove(m);
+	}
+	
+	public void addItemToMenu(Item i, String course){
+		menu.addItem(i, course);
+		itemCounter.put(i, 0);
+	}
+	
+	public void removeItemFromMenu(Item i){
+		menu.removeItem(i);
+		itemCounter.remove(i);
+	}
 
 	
 	
 	public void receiveOrder(Order o){
 		ordersToComplete.add(o);
+		counter++;
+		for(Meal m : o.getMeals()){
+			mealCounter.put(m, mealCounter.get(m) + 1);
+		}
+		for(Item i : o.getItems()){
+			itemCounter.put(i, itemCounter.get(i) + 1);
+		}
 	}
 	
 	public void orderCompleted(Order o){
@@ -98,6 +131,18 @@ public class Restaurant extends User {
 
 	public void setSpecialDiscountFactor(double specialDiscountFactor) {
 		this.specialDiscountFactor = specialDiscountFactor;
+	}
+	
+	public int getCounter(){
+		return counter;
+	}
+
+	public HashMap<Meal, Integer> getMealCounter() {
+		return mealCounter;
+	}
+
+	public HashMap<Item, Integer> getItemCounter() {
+		return itemCounter;
 	}
 	
 	

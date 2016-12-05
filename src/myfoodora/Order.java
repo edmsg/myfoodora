@@ -9,9 +9,10 @@ public class Order {
 	private ArrayList<Meal> meals;
 	private Customer customer;
 	private Restaurant restaurant;
+	private Courier courier = null; //initially no courier ; updated when a courier is defined
 	private double price;
 	private double dueToRestaurant;
-	private double discountDueToCards = 0;
+	private double discountDueToCards = 0; //TODO : à modifier
 	private Calendar date;
 	
 	public Order(ArrayList<Item> items, ArrayList<Meal> meals, Customer customer, Restaurant restaurant, MyFoodora sys){
@@ -124,6 +125,18 @@ public class Order {
 
 	public Calendar getDate() {
 		return date;
+	}
+	
+	public void setDate(Calendar date){
+		this.date = date;
+	}
+
+	public Courier getCourier() {
+		return courier;
+	}
+
+	public void setCourier(Courier courier) {
+		this.courier = courier;
 	}
 	
 	
