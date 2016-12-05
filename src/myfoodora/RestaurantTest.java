@@ -18,6 +18,7 @@ public class RestaurantTest {
 		ArrayList<String> type = new ArrayList<>();
 		type.add("vegetarian");
 		
+		
 		Item i1 = new Item("Salad", 2, type);
 		Item i2 = new Item("Pasta", 2, type);
 		
