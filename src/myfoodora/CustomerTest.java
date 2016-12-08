@@ -9,7 +9,7 @@ import org.junit.Test;
 public class CustomerTest {
 	
 	private MyFoodora sys = new MyFoodora();
-	private Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+	private Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "basic fidelity card", sys);
 	private Restaurant ru = new Restaurant("leRu", "Restaurant Universitaire", new Coordinates(3,3), sys);
 	
 	@Test

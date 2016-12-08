@@ -42,6 +42,7 @@ public class Order {
 		}
 		
 		total = priceOfOrder*(1 + sys.getMarkupPercentage()) + sys.getServiceFee(); //TODO :  - discount due to cards
+		total = customer.getFidelityCard().computeNewPrice(total);
 		
 		return total;
 	}
