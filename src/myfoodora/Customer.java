@@ -8,6 +8,7 @@ public class Customer extends User implements Observer {
 	private Coordinates address;
 	private String email;
 	private long phoneNumber;
+	private FidelityCard fidelityCard;
 	private ArrayList<Order> historyOfOrders;
 	private ArrayList<String> messages; //to store the new offers until the customer checks in
 	
@@ -18,21 +19,25 @@ public class Customer extends User implements Observer {
 		this.address = address;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.fidelityCard = new BasicFidelityCard();
 		this.historyOfOrders = new ArrayList<>();
 		this.messages = new ArrayList<>();
 		sys.addUser(this);
 	}
 	
-	public Order makeOrder(ArrayList<Item> items, ArrayList<Meal> meals, Restaurant restaurant){
+	public Order createOrderAndCommand(ArrayList<Item> items, ArrayList<Meal> meals, Restaurant restaurant){
 		
 		Order o = new Order(items, meals, this, restaurant, getSys());
 		getSys().newOrder(o);
 		return o;
 	}
 	
+	public void command(Order o){
+		getSys().newOrder(o);
+	}
+	
 	public void receiveConfirmation(Order o){
-		//TODO : que faire ?
-		System.out.println("The order is confirmed and will be delivered soon.");
+		messages.add("The order is confirmed and will be prepared soon.");
 		historyOfOrders.add(o);
 	}
 	
@@ -77,8 +82,12 @@ public class Customer extends User implements Observer {
 		return messages;
 	}
 
-	
-	
-	
+	public FidelityCard getFidelityCard() {
+		return fidelityCard;
+	}
+
+	public void setFidelityCard(FidelityCard fidelityCard) {
+		this.fidelityCard = fidelityCard;
+	}
 	
 }

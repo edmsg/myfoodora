@@ -12,7 +12,7 @@ public class Order {
 	private Courier courier = null; //initially no courier ; updated when a courier is defined
 	private double price;
 	private double dueToRestaurant;
-	private double discountDueToCards = 0; //TODO : à modifier
+	private double discountDueToCards;
 	private Calendar date;
 	
 	public Order(ArrayList<Item> items, ArrayList<Meal> meals, Customer customer, Restaurant restaurant, MyFoodora sys){
@@ -51,10 +51,12 @@ public class Order {
 	
 	public double computeCost(){
 
-		double total = this.dueToRestaurant*(1 + sys.getMarkupPercentage()) + sys.getServiceFee(); //TODO :  - discount due to cards
-		//TODO : s'il y a une reduction à cause d'une carte de fidelité, mettre à jour le champ discountDueToCards (besoin de lui ailleurs)
+		double total = this.dueToRestaurant*(1 + sys.getMarkupPercentage()) + sys.getServiceFee(); 
+		double totalWithRed = customer.getFidelityCard().computeNewPrice(total);
 		
-		return total;
+		discountDueToCards = total - totalWithRed;
+		
+		return totalWithRed;
 	}
 	
 	/**

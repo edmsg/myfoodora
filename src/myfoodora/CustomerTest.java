@@ -11,6 +11,8 @@ public class CustomerTest {
 	private MyFoodora sys = new MyFoodora();
 	private Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
 	private Restaurant ru = new Restaurant("leRu", "Restaurant Universitaire", new Coordinates(3,3), sys);
+	private Courier jodev = new Courier("jodev", "Joseph", "Dev", 000111222, sys);
+	
 	
 	@Test
 	public void testMakeOrder() {
@@ -35,7 +37,10 @@ public class CustomerTest {
 		items.add(sandwich);
 		meals.add(m);
 		
-		Order o = antho.makeOrder(items, meals, ru);
+		jodev.setAvailable(true);
+		
+		Order o = antho.createOrderAndCommand(items, meals, ru);
+
 		
 		
 		assertEquals(o, sys.getHistoryOfOrders().get(0));

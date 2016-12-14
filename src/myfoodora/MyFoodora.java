@@ -61,6 +61,7 @@ public class MyFoodora implements Observable {
 		else{
 			//No available courier
 			//TODO : wait until an available one is found
+			System.out.println("No courier avalaible !");
 			
 		}
 		
