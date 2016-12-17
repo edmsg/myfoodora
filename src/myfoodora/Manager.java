@@ -5,11 +5,13 @@ import java.util.Calendar;
 
 /**
  * Managers oversee the system. They add/remove users and set the general parameters of the system.
- * @author benjamin
  *
  */
 
-public class Manager extends User{
+public class Manager extends User implements java.io.Serializable{
+	
+	private static final long serialVersionUID = -3739678524659475464L;
+	
 	private String name;
 	private String surname;
 	

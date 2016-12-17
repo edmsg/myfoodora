@@ -2,7 +2,9 @@ package myfoodora;
 
 import java.util.ArrayList;
 
-public class DeliveryPolicyFastest implements DeliveryPolicy{
+public class DeliveryPolicyFastest implements DeliveryPolicy, java.io.Serializable{
+	
+	private static final long serialVersionUID = -1527305446352781277L;
 	
 	MyFoodora sys;
 	

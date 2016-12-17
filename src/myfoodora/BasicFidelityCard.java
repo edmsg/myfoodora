@@ -6,7 +6,10 @@ package myfoodora;
  *
  */
 
-public class BasicFidelityCard implements FidelityCard {
+public class BasicFidelityCard implements FidelityCard, java.io.Serializable {
+	
+	private static final long serialVersionUID = -1230949202485830924L;
+
 	public double computeNewPrice(double price){
 		return price;
 	}

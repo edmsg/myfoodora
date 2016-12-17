@@ -5,10 +5,12 @@ import java.util.ArrayList;
 /**
  * Item is the base class for representing various dishes
  * 
- * @author benjamin
  */
 
-public class Item {
+public class Item implements java.io.Serializable {
+	
+	private static final long serialVersionUID = 8594445455607168104L;
+	
 	private String name;
 	private double price;
 	private ArrayList<String> type; //contains a list of keywords ("vegan", "gluten-free", etc.)

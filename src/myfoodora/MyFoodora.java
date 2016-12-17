@@ -8,7 +8,10 @@ import java.util.ArrayList;
  *
  */
 
-public class MyFoodora implements Observable {
+public class MyFoodora implements Observable, java.io.Serializable {
+	
+	private static final long serialVersionUID = -6071035973578485124L;
+	
 	private ArrayList<Manager> managers;
 	private ArrayList<Restaurant> restaurants;
 	private ArrayList<Courier> couriers;
@@ -178,6 +181,32 @@ public class MyFoodora implements Observable {
 		for(Observer o : listenersSpecialOffers){
 			o.update(message);
 		}
+	}
+	
+	public User lookForUserByUsername(String username){
+		for(Customer c : customers){
+			if(c.getUsername().equals(username)){
+				return (User) c;
+			}
+		}
+		for(Courier c : couriers){
+			if(c.getUsername().equals(username)){
+				return (User) c;
+			}
+		}
+		for(Restaurant r : restaurants){
+			if(r.getUsername().equals(username)){
+				return (User) r;
+			}
+		}
+		for(Manager m : managers){
+			if(m.getUsername().equals(username)){
+				return (User) m;
+			}
+		}
+		System.out.println("User " + username + " was not found.");
+		return null;
+		
 	}
 	
 	public ArrayList<Manager> getManagers() {

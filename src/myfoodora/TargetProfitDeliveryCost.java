@@ -3,7 +3,10 @@ package myfoodora;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class TargetProfitDeliveryCost implements ProfitPolicy{
+public class TargetProfitDeliveryCost implements ProfitPolicy, java.io.Serializable{
+	
+	private static final long serialVersionUID = -5192057426006956737L;
+	
 	private MyFoodora sys;
 	
 	public TargetProfitDeliveryCost(MyFoodora sys){

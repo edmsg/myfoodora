@@ -3,7 +3,10 @@ package myfoodora;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Order {
+public class Order implements java.io.Serializable {
+	
+	private static final long serialVersionUID = -2863254009477402724L;
+	
 	private MyFoodora sys;
 	private ArrayList<Item> items;
 	private ArrayList<Meal> meals;
@@ -84,7 +87,7 @@ public class Order {
 		i.add(i2);
 		i.add(i3);
 		
-		Meal m = restaurant.makeNewMeal(i, true);
+		Meal m = restaurant.makeNewMeal("Meal 1", i, true);
 		
 		ArrayList<Item> items = new ArrayList<>();
 		ArrayList<Meal> meals = new ArrayList<>();

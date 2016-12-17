@@ -6,11 +6,12 @@ import java.util.ArrayList;
  * Each restaurant stores the proposed dishes in a menu.
  * It also stores the proposed pre-defined meals.
  * 
- * @author benjamin
  *
  */
 
-public class Menu {
+public class Menu implements java.io.Serializable{
+	private static final long serialVersionUID = 4272799176941898684L;
+	
 	private ArrayList<Item> starters;
 	private ArrayList<Item> mainDishes;
 	private ArrayList<Item> desserts;
@@ -95,6 +96,27 @@ public class Menu {
 			System.out.println("No " + i.getName() + " was found in the menu. Nothing was removed.");
 		}
 		
+	}
+	
+	public Item lookForItemByName(String name){
+		for(Item i : starters){
+			if(i.getName().equals(name)){
+				return i;
+			}
+		}
+		for(Item i : mainDishes){
+			if(i.getName().equals(name)){
+				return i;
+			}
+		}
+		for(Item i : desserts){
+			if(i.getName().equals(name)){
+				return i;
+			}
+		}
+		System.out.println("Item not found in the menu.");
+		
+		return null;
 	}
 	
 	public void addMeal(Meal m){

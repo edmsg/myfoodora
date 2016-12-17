@@ -2,7 +2,10 @@ package myfoodora;
 
 import java.util.ArrayList;
 
-public class Customer extends User implements Observer {
+public class Customer extends User implements Observer, java.io.Serializable {
+	
+	private static final long serialVersionUID = -2271603740213650215L;
+	
 	private String name;
 	private String surname;
 	private Coordinates address;
@@ -11,6 +14,19 @@ public class Customer extends User implements Observer {
 	private FidelityCard fidelityCard;
 	private ArrayList<Order> historyOfOrders;
 	private ArrayList<String> messages; //to store the new offers until the customer checks in
+	
+	public Customer(String username, String name, String surname, Coordinates address, String password, MyFoodora sys){
+		super(username, password, sys);
+		this.name = name;
+		this.surname = surname;
+		this.address = address;
+		this.email = "";
+		this.phoneNumber = -1L;
+		this.fidelityCard = new BasicFidelityCard();
+		this.historyOfOrders = new ArrayList<>();
+		this.messages = new ArrayList<>();
+		sys.addUser(this);
+	}
 	
 	public Customer(String username, String name, String surname, Coordinates address, String email, long phoneNumber, MyFoodora sys){
 		super(username, sys);
@@ -89,5 +105,22 @@ public class Customer extends User implements Observer {
 	public void setFidelityCard(FidelityCard fidelityCard) {
 		this.fidelityCard = fidelityCard;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public long getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
 	
 }

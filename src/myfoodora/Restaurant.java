@@ -3,7 +3,10 @@ package myfoodora;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Restaurant extends User {
+public class Restaurant extends User implements java.io.Serializable{
+	
+	private static final long serialVersionUID = -7729011553642502461L;
+	
 	private String name;
 	private Coordinates address;
 	private Menu menu;
@@ -27,11 +30,24 @@ public class Restaurant extends User {
 		sys.addUser(this);
 	}
 	
-	public Meal makeNewMeal(ArrayList<Item> items, boolean mealOfTheWeek){
+	public Restaurant(String username, String name, Coordinates address, String password, MyFoodora sys){
+		super(username, password, sys);
+		this.name = name;
+		this.address = address;
+		this.menu = new Menu();
+		genericDiscountFactor = 0.05;
+		specialDiscountFactor = 0.1;
+		ordersToComplete = new ArrayList<>();
+		mealCounter = new HashMap<>();
+		itemCounter = new HashMap<>();
+		sys.addUser(this);
+	}
+	
+	public Meal makeNewMeal(String name, ArrayList<Item> items, boolean mealOfTheWeek){
 		double price = this.computeMealPrice(items, mealOfTheWeek);
 		ArrayList<String> type = this.checkTypeMeal(items);
 		
-		return MealFactory.createMeal(items, price, type, mealOfTheWeek);
+		return MealFactory.createMeal(name, items, price, type, mealOfTheWeek);
 	}
 	
 	public double computeMealPrice(ArrayList<Item> items, boolean mealOfTheWeek){

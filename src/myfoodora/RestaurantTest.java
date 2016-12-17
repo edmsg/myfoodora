@@ -26,8 +26,8 @@ public class RestaurantTest {
 		items.add(i1);
 		items.add(i2);
 		
-		Meal m1 = ru.makeNewMeal(items, true);
-		Meal m2 = MealFactory.createMeal(items, 3.6, type, true);
+		Meal m1 = ru.makeNewMeal("Meal 1", items, true);
+		Meal m2 = MealFactory.createMeal("Meal1", items, 3.6, type, true);
 		
 		assertEquals(m2.getPrice(), m1.getPrice(), 1e-6);
 		assertEquals(m1.getItems(), m2.getItems());

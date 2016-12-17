@@ -2,8 +2,11 @@ package myfoodora;
 
 import java.util.ArrayList;
 
-public class DeliveryPolicyFairOccupation implements DeliveryPolicy {
+public class DeliveryPolicyFairOccupation implements DeliveryPolicy, java.io.Serializable {
 
+	
+	private static final long serialVersionUID = 1018847097949871706L;
+	
 	MyFoodora sys;
 	
 	public DeliveryPolicyFairOccupation(MyFoodora sys) {

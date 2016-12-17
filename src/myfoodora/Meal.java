@@ -9,11 +9,13 @@ import java.util.ArrayList;
  * For now, they come in two kinds : full meals (3 items), or half-meals (2 items).
  * We use a factory pattern so this can be easily extended in the future.
  * 
- * @author benjamin
  *
  */
 
-public abstract class Meal {
+public abstract class Meal implements java.io.Serializable{
+	private static final long serialVersionUID = 351718281812180285L;
+	
+	private String name;
 	private double price;
 	private ArrayList<Item> items;
 	private ArrayList<String> type;
@@ -47,6 +49,14 @@ public abstract class Meal {
 	public void setMealOfTheWeek(boolean mealOfTheWeek) {
 		this.mealOfTheWeek = mealOfTheWeek;
 		
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class MenuTest {
 
 	@Test
 	public void testAddMeal() {
-		Meal meal = MealFactory.createMeal(i1, i2, 10, null, false);
+		Meal meal = MealFactory.createMeal("Meal1", i1, i2, 10, null, false);
 		m.addMeal(meal);
 		assertEquals(m.getMeals().get(0).getItems().size(), 2);
 		
@@ -47,7 +47,7 @@ public class MenuTest {
 
 	@Test
 	public void testRemoveMeal() {
-		Meal meal = MealFactory.createMeal(i1, i2, 10, null, false);
+		Meal meal = MealFactory.createMeal("Meal1", i1, i2, 10, null, false);
 		m.addMeal(meal);
 		m.removeMeal(meal);
 		assertEquals(m.getMeals().size(), 0);

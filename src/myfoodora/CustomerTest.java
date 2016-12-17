@@ -29,7 +29,7 @@ public class CustomerTest {
 		Item salad = new Item("Salad", 1);
 		Item beefsteak = new Item("Beefsteak", 5);
 		
-		Meal m = MealFactory.createMeal(salad, beefsteak, 5, null, false);
+		Meal m = MealFactory.createMeal("Meal1", salad, beefsteak, 5, null, false);
 		
 		ArrayList<Item> items = new ArrayList<>();
 		ArrayList<Meal> meals = new ArrayList<>();

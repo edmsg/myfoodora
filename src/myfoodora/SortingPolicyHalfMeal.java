@@ -3,7 +3,10 @@ package myfoodora;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SortingPolicyHalfMeal implements SortingPolicy {
+public class SortingPolicyHalfMeal implements SortingPolicy, java.io.Serializable {
+	
+	private static final long serialVersionUID = -4514366174899883201L;
+	
 	MyFoodora sys;
 	boolean reverse; //if false, half meals are sorted from the most ordered to the least ordered. If true, it is the opposite.
 

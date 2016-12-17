@@ -1,6 +1,9 @@
 package myfoodora;
 
-public class Coordinates {
+public class Coordinates implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 2865038076734694774L;
+	
 	private double x;
 	private double y;
 	

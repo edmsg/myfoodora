@@ -3,7 +3,9 @@ package myfoodora;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class TargetProfitMarkupPercentage implements ProfitPolicy {
+public class TargetProfitMarkupPercentage implements ProfitPolicy, java.io.Serializable {
+	
+	private static final long serialVersionUID = -6289645212984602162L;
 	
 	private MyFoodora sys;
 	

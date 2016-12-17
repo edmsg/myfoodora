@@ -14,7 +14,7 @@ public class HalfMealTest {
 		Item i2 = new Item("Pasta", 5);
 		
 		
-		Meal m = MealFactory.createMeal(i1, i2, 15, null, false);
+		Meal m = MealFactory.createMeal("Meal1", i1, i2, 15, null, false);
 		
 		assertTrue(m instanceof HalfMeal);
 		assertTrue(m.getItems().contains(i1));

@@ -3,7 +3,9 @@ package myfoodora;
 /**
  *	Fidelity Card which adds points at each order, and grants a discount when a certain number of points is reached.
  */
-public class PointFidelityCard implements FidelityCard {
+public class PointFidelityCard implements FidelityCard, java.io.Serializable {
+	private static final long serialVersionUID = -6233348177136503067L;
+	
 	private int points;
 	
 	public PointFidelityCard (){

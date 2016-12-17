@@ -14,10 +14,7 @@ public class MyFoodoraTest {
 	Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
 	Manager antoine = new Manager("Me Q", "Antoine", "Cr", sys);
 	
-	@Test
-	public void testNewOrder() {
-		fail("Not yet implemented");
-	}
+	
 
 	@Test
 	public void testAddUser() {
@@ -68,6 +65,13 @@ public class MyFoodoraTest {
 		jodev.setAvailable(false);
 		assertEquals(sys.findAvailableCourier(o), null);
 		
+	}
+	
+	@Test
+	public void testFindUserByUsername(){
+		assertEquals(ru, sys.lookForUserByUsername("le ru"));
+		assertEquals(jodev, sys.lookForUserByUsername("jodev"));
+		assertEquals(antho, sys.lookForUserByUsername("antho"));
 	}
 
 }

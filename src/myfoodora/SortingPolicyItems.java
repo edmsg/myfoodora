@@ -3,7 +3,10 @@ package myfoodora;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SortingPolicyItems implements SortingPolicy {
+public class SortingPolicyItems implements SortingPolicy, java.io.Serializable {
+	
+	private static final long serialVersionUID = 180298799033135623L;
+	
 	MyFoodora sys;
 	boolean reverse; //if false, items are sorted from the most ordered to the least ordered. If true, it is the opposite.
 

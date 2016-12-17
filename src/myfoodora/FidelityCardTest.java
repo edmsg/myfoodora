@@ -41,20 +41,6 @@ public class FidelityCardTest {
 		assertEquals(1020, p1, 1e-6);
 		assertEquals(90, p2, 1e-6);
 	}
-	
-	
-	@Test
-	public void testCustomerGetsDiscount(){
-		MyFoodora sys = new MyFoodora();
-		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
-		Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
-		
-		antho.setFidelityCard(FidelityCardFactory.createFidelityCard("points fidelity card"));
-		Order o = Order.exampleOfOrder(antho, ru, sys);
-		
-		System.out.println();
-		
-	}
 }
 
 		

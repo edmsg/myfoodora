@@ -1,6 +1,8 @@
 package myfoodora;
 
-public class Courier extends User {
+public class Courier extends User implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 4922340959316128316L;
 	
 	private String name;
 	private String surname;

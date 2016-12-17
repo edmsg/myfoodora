@@ -29,9 +29,9 @@ public class SortingPolicyTest {
 		c.add(i1);
 		c.add(i2);
 		
-		Meal m1 = ru.makeNewMeal(a, false);
-		Meal m2 = ru.makeNewMeal(b, false);
-		Meal m3 = ru.makeNewMeal(c, false);
+		Meal m1 = ru.makeNewMeal("Meal 1", a, false);
+		Meal m2 = ru.makeNewMeal("Meal 2", b, false);
+		Meal m3 = ru.makeNewMeal("Meal 3", c, false);
 		
 		ru.addMealToMenu(m1);
 		ru.addMealToMenu(m2);
