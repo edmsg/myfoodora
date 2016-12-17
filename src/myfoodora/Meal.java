@@ -23,7 +23,8 @@ public abstract class Meal implements java.io.Serializable{
 	
 	
 	
-	public Meal(ArrayList<Item> items, double price, ArrayList<String> type, boolean mealOfTheWeek){
+	public Meal(String name, ArrayList<Item> items, double price, ArrayList<String> type, boolean mealOfTheWeek){
+		this.name = name;
 		this.items = items;
 		this.mealOfTheWeek = mealOfTheWeek;
 		this.type = type;

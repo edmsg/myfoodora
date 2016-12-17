@@ -1,12 +1,10 @@
 package myfoodora;
 
-import java.sql.Savepoint;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import org.omg.CORBA.INITIALIZE;
 
 public class Main {
 	
@@ -36,10 +34,16 @@ public class Main {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		User current = null;
+		
+		
+		User current = null; //current user
+		Restaurant selectedRestaurant = null;
+		Order currentOrder = null;
 		String input = "";
 		
 		MyFoodora sys = LoadSave.loadSys();
+		
+		//Manager john = new Manager("john", "john", "doe", "aa", sys);
 		
 		System.out.println("Welcome to myFoodora. Type a command.");
 		
@@ -157,7 +161,7 @@ public class Main {
 							Item i2 = ((Restaurant)current).getMenu().lookForItemByName(dish2);
 							Item i3 = null;
 							if(dish3 != null){
-								i3 = ((Restaurant)current).getMenu().lookForItemByName(dish2);
+								i3 = ((Restaurant)current).getMenu().lookForItemByName(dish3);
 							}
 							if(i1 == null || i2 == null || (dish3 != null && i3 == null)){
 								System.out.println("Error : the items were not all in menu");
@@ -179,6 +183,173 @@ public class Main {
 					}
 					
 				}
+				else if(token.equals("removeMeal")){
+					if(!(current instanceof Restaurant)){
+						System.out.println("This command can only be performed by restaurant !");
+					}
+					else{
+						String name = st.nextToken();
+						((Restaurant)current).removeMealFromMenu(((Restaurant)current).getMenu().lookForMealByName(name));
+						System.out.println("The meal : " + name + " was successfully removed.");
+					}
+				}
+				else if(token.equals("removeDish")){
+					if(!(current instanceof Restaurant)){
+						System.out.println("This command can only be performed by restaurant !");
+					}
+					else{
+						String name = st.nextToken();
+						Item i = ((Restaurant)current).getMenu().lookForItemByName(name);
+						if(i != null){
+							ArrayList<Meal> mealsContainingItem = new ArrayList<>();
+							for(Meal m : ((Restaurant)current).getMenu().getMeals()){
+								if(m.getItems().contains(i)){
+									mealsContainingItem.add(m);
+								}
+							}
+							if(!mealsContainingItem.isEmpty()){
+								System.out.println("Caution ! The item you are trying to delete is contained in the fellowing meals :");
+								for(Meal m : mealsContainingItem){
+									System.out.println(m.getName() + "\n");
+								}
+								System.out.println("Deleting this item will also delete these meals. Are you sure you want to proceed ? (y/n)");
+								String entry = sc.nextLine();
+								if(entry.equals("y")){
+									for(Meal m : mealsContainingItem){
+										((Restaurant)current).removeMealFromMenu(m);
+									}
+									((Restaurant)current).removeItemFromMenu(i);
+									
+								}
+								else{
+									System.out.println("Deletion aborted.");
+								}
+							}
+							else{
+								((Restaurant)current).removeItemFromMenu(i);
+								System.out.println("The item : " + name + " was successfully removed.");
+							}
+						}
+					}
+				}
+				else if(token.equals("showRestaurants")){
+					System.out.println("Available restaurants : ");
+					for(Restaurant r : sys.getRestaurants()){
+						System.out.println(r.getUsername());
+					}
+				}
+				else if(token.equals("selectRestaurant")){
+					String name = st.nextToken();
+					selectedRestaurant = (Restaurant)sys.lookForUserByUsername(name);
+					if(selectedRestaurant != null){
+						System.out.println("You have selected the restaurant " + selectedRestaurant.getUsername() + ".");
+					}
+				}
+				else if(token.equals("showMenu")){
+					if(selectedRestaurant == null){
+						System.out.println("No restaurant selected. You have to select a restaurant first !");
+					}
+					else{
+						System.out.println("Menu of the restaurant : " + selectedRestaurant.getName());
+						System.out.println(selectedRestaurant.getMenu().menuText());
+					}
+				}
+				else if(token.equals("startOrder")){
+					if(!(current instanceof Customer)){
+						System.out.println("This command can only be performed by a customer !");
+					}
+					else if(selectedRestaurant == null){
+						System.out.println("You have to select a restaurant first ! (\"showRestaurants\")");
+					}
+					else{
+						currentOrder = new Order(new ArrayList<Item>(), new ArrayList<Meal>(), (Customer)current, selectedRestaurant, sys);
+						System.out.println("New order started.");
+					}
+					
+				}
+				else if(token.equals("addDishToOrder")){
+					if(currentOrder == null){
+						System.out.println("You have to start an order first. (\"startOrder\")");
+					}
+					else{
+						String name = st.nextToken();
+						Item i = currentOrder.getRestaurant().getMenu().lookForItemByName(name);
+						if(i != null){
+							currentOrder.addItemToOrder(i);
+							System.out.println("The dish " + name + " was added to the order. The price is now : " + currentOrder.getPrice() + ".");
+						}
+					}
+				}
+				else if(token.equals("addMealToOrder")){
+					if(currentOrder == null){
+						System.out.println("You have to create an order first. (\"createOrder\")");
+					}
+					else{
+						String name = st.nextToken();
+						Meal m = currentOrder.getRestaurant().getMenu().lookForMealByName(name);
+						if(m != null){
+							currentOrder.addMealToOrder(m);
+							System.out.println("The meal " + name + " was added to the order. The price is now : " + currentOrder.getPrice() + ".");
+						}
+					}
+				}
+				else if(token.equals("removeDishFromOrder")){
+					if(currentOrder == null){
+						System.out.println("You have to create an order first. (\"createOrder\")");
+					}
+					else{
+						String name = st.nextToken();
+						Item i = currentOrder.getRestaurant().getMenu().lookForItemByName(name);
+						if(i != null){
+							currentOrder.removeItemFromOrder(i);
+							System.out.println("The item " + i.getName() + " was removed from the order. The price is now : " + currentOrder.getPrice());
+						}
+						else{
+							System.out.println("The item " + i.getName() + " was not found in the order.");
+						}
+					}
+				}
+				else if(token.equals("removeMealFromOrder")){
+					if(currentOrder == null){
+						System.out.println("You have to create an order first. (\"startOrder\")");
+					}
+					else{
+						String name = st.nextToken();
+						Meal m = currentOrder.getRestaurant().getMenu().lookForMealByName(name);
+						if(m != null){
+							currentOrder.removeMealFromOrder(m);
+							System.out.println("The meal " + m.getName() + " was removed from the order. The price is now : " + currentOrder.getPrice());
+						}
+						else{
+							System.out.println("The meal " + m.getName() + " was not found in the order.");
+						}
+					}
+				}
+				else if(token.equals("showOrder")){
+					if(currentOrder == null){
+						System.out.println("You have to create an order first. (\"startOrder\")");
+					}
+					else{
+						System.out.println("Order contains for now : ");
+						System.out.print("Items : ");
+						for(Item i : currentOrder.getItems()){
+							System.out.print(i.getName() + " ");
+						}
+						System.out.print("\nMeals : ");
+						for(Meal m : currentOrder.getMeals()){
+							System.out.print(m.getName() + " ");
+						}
+						System.out.println("\nThe price is now " + currentOrder.getPrice());
+					}
+				}
+				else if(token.equals("showOwnMenu")){
+					if(!(current instanceof Restaurant)){
+						System.out.println("This command can only be performed by restaurant !");
+					}
+					else{
+						System.out.println(((Restaurant)current).getMenu().menuText());
+					}
+				}
 				else if(token.equals("save")){
 					LoadSave.saveSys(sys);
 				}
@@ -199,6 +370,19 @@ public class Main {
 					for(Manager m : sys.getManagers()){
 						System.out.println(m.getUsername());
 					}
+				}
+				else if(token.equals("removeUser")){
+					if(!(current instanceof Manager)){
+						System.out.println("This command can only be performed by a manager !");
+					}
+					else{
+						String userToRemove = st.nextToken();
+						((Manager)current).removeUser(sys.lookForUserByUsername(userToRemove));
+					}
+				}
+				else if(token.equals("logout")){
+					current = null;
+					System.out.println("Logged out successfully.");
 				}
 				else if(token.equals("test")){
 					

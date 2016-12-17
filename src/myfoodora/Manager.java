@@ -22,6 +22,13 @@ public class Manager extends User implements java.io.Serializable{
 		sys.addUser(this); //the manager is automatically added to the manager list of the system
 	}
 	
+	public Manager(String username, String name, String surname, String password, MyFoodora sys){
+		super(username, password, sys);
+		this.name = name;
+		this.surname = surname;
+		sys.addUser(this); //the manager is automatically added to the manager list of the system
+	}
+	
 	public Manager addManager(String username, String name, String surname){
 		return new Manager(username, name, surname, getSys()); //the manager is automatically added to the system through its construction : no need to add it a second time
 	}

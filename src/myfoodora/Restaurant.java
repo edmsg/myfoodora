@@ -185,6 +185,10 @@ public class Restaurant extends User implements java.io.Serializable{
 	public Menu getMenu() {
 		return menu;
 	}
+
+	public String getName() {
+		return name;
+	}
 	
 	
 	

@@ -119,6 +119,16 @@ public class Menu implements java.io.Serializable{
 		return null;
 	}
 	
+	public Meal lookForMealByName(String name){
+		for(Meal m : meals){
+			if(m.getName().equals(name)){
+				return m;
+			}
+		}
+		System.out.println("Meal not found in the menu.");
+		return null;
+	}
+	
 	public void addMeal(Meal m){
 		meals.add(m);
 	}
@@ -133,22 +143,22 @@ public class Menu implements java.io.Serializable{
 	}
 	
 	public String menuText(){
-		String s = "Menu :\nStarters :\n";
+		String s = "Starters :\n";
 		for(Item i : starters){
 			s += i.getName() + "\n";
 		}
-		s += "\nMain Dishes :\n";
+		s += "Main Dishes :\n";
 		for(Item i : mainDishes){
 			s += i.getName() + "\n";
 		}
-		s += "\nDesserts :\n";
+		s += "Desserts :\n";
 		for(Item i : desserts){
 			s += i.getName() + "\n";
 		}
 		//add meals
 		s += "\nMeals :";
 		for(Meal m : meals){
-			s += "\n";
+			s += "\n" + m.getName() + " : ";
 			for(Item i : m.getItems()){
 				s += i.getName() + " ";
 			}

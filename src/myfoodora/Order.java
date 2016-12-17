@@ -62,6 +62,36 @@ public class Order implements java.io.Serializable {
 		return totalWithRed;
 	}
 	
+	public void addItemToOrder(Item i){
+		items.add(i);
+		//update the price :
+		dueToRestaurant = computeDueToRestaurant();
+		price = computeCost();
+	}
+	
+	public void addMealToOrder(Meal m){
+		meals.add(m);
+		//update price
+		dueToRestaurant = computeDueToRestaurant();
+		price = computeCost();
+	}
+	
+	public void removeItemFromOrder(Item i){
+		items.remove(i);
+		//update the price :
+		dueToRestaurant = computeDueToRestaurant();
+		price = computeCost();
+	}
+	
+	public void removeMealFromOrder(Meal m){
+		meals.remove(m);
+		//update price
+		dueToRestaurant = computeDueToRestaurant();
+		price = computeCost();
+	}
+	
+	
+	
 	/**
 	 * This function creates an example of order. We use it in tests because creating an order from scratch is quite time-consuming.
 	 * @return an order containing various items and meals.
