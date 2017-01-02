@@ -11,14 +11,4 @@ public class FullMeal extends Meal implements java.io.Serializable {
 		
 	}
 	
-	@Override
-	public String toString(){
-		String s = "Full meal : ";
-		for(Item i : getItems()){
-			s += i.getName() + ", ";
-		}
-		s += "for " + getPrice() + " euros.";
-		
-		return s;
-	}
 }

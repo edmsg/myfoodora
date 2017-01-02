@@ -146,10 +146,20 @@ public class Restaurant extends User implements java.io.Serializable{
 		ordersToComplete.remove(o);
 	}
 	
+	public Order lookForOrderByName(String name){
+		for(Order o : ordersToComplete){
+			if(o.getName().equals(name)){
+				return o;
+			}
+		}
+		System.out.println("No order with name " + name + " was found in the orders to complete.");
+		return null;
+	}
+	
 	public void setMealOfTheWeek(Meal m){
 		m.setMealOfTheWeek(true);
 		m.setPrice(computeMealPrice(m.getItems(), true));
-		getSys().notifyObservers("New offer from the restaurant " + name + " : " + m.toString() + " is now meal of the week.");
+		getSys().notifyObservers("New offer from the restaurant " + name + " : " + m.getName() + " is now meal of the week.");
 	}
 	
 	public void setNotMealOfTheWeek(Meal m){
@@ -189,6 +199,11 @@ public class Restaurant extends User implements java.io.Serializable{
 	public String getName() {
 		return name;
 	}
+
+	public ArrayList<Order> getOrdersToComplete() {
+		return ordersToComplete;
+	}
+	
 	
 	
 	

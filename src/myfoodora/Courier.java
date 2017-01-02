@@ -7,30 +7,42 @@ public class Courier extends User implements java.io.Serializable{
 	private String name;
 	private String surname;
 	private Coordinates position;
+	private Order orderInDelivery;
 	private boolean isAvailable;
 	private long phoneNumber;
 	private int counter; //counts the number of delivered orders
 
-	public Courier(String username, String name, String surname, long phoneNumber, MyFoodora sys){
-		super(username, sys);
+	public Courier(String username, String name, String surname, long phoneNumber, String password, MyFoodora sys){
+		super(username, password, sys);
 		this.name = name;
 		this.surname = surname;
 		this.phoneNumber = phoneNumber;
 		this.position = new Coordinates(0, 0);
 		this.counter = 0;
 		this.isAvailable = true;
+		this.orderInDelivery = null;
 		sys.addUser(this);
 	}
 	
 	public boolean acceptDelivery(Order o){
-		//TODO : create a routine to allow the courier to refuse the delivery
 		boolean accept = true;
 		if(accept){
-			//we keep a track of the number of orders delivered
-			counter++;
-			isAvailable = false;
+			startDelivery(o);
+			orderInDelivery = o;
 		}
 		return accept;
+	}
+	
+	public void startDelivery(Order o){
+		isAvailable = false;
+	}
+	
+	public void endDelivery(){
+		if(orderInDelivery != null){
+			counter ++;
+			orderInDelivery = null;
+		}
+		isAvailable = true;
 	}
 	
 	

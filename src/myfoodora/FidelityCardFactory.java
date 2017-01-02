@@ -10,13 +10,13 @@ public class FidelityCardFactory implements java.io.Serializable {
 		if (fidelityCardType==null){
 			return(null);
 		}
-		if (fidelityCardType.equalsIgnoreCase("BASIC FIDELITY CARD")){
+		if (fidelityCardType.equalsIgnoreCase("BASIC")){
 			return new BasicFidelityCard();
 		}
-		if (fidelityCardType.equalsIgnoreCase("POINT FIDELITY CARD")){
+		if (fidelityCardType.equalsIgnoreCase("POINT")){
 			return new PointFidelityCard();
 		}
-		if (fidelityCardType.equalsIgnoreCase("LOTTERY FIDELITY CARD")){
+		if (fidelityCardType.equalsIgnoreCase("LOTTERY")){
 			return new LotteryFidelityCard();
 		}
 		return null;

@@ -9,7 +9,7 @@ import org.junit.Test;
 public class ProfitPolicyTest {
 
 	MyFoodora sys = new MyFoodora();
-	Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+	Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
 	Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
 	Manager antoine = new Manager("Me Q", "Antoine", "Cr", sys);
 	

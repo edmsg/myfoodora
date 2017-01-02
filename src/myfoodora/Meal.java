@@ -61,6 +61,32 @@ public abstract class Meal implements java.io.Serializable{
 	}
 
 	@Override
-	public abstract String toString();
+	public String toString(){
+		String s = "";
+		s += this.name + " :\n";
+		for(Item i : items){
+			s += i.getName() + " : " + i.getPrice();
+			if(i.getType().size() != 0){
+				s += " (";
+				for(String type : i.getType()){
+					s += type + " ";
+				}
+				s += ")";
+			}
+			s += "\n";
+		}
+		s += "Total price : " + this.price;
+		if(type.size() != 0){
+			s += " (";
+			for(String t : type){
+				s += t + " ";
+			}
+			s += ")";
+		}
+		s += "\n";
+		s += "Special offer : " + this.mealOfTheWeek;
+		
+		return s;
+	}
 
 }

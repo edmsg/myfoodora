@@ -15,34 +15,34 @@ public class ManagerTest {
 	
 	@Test
 	public void testAddManager() {
-		john.addManager("Me Q", "Antoine", "Crepel");
+		john.addManager("Me Q", "Antoine", "Crepel", "aa");
 		assertEquals("Me Q", sys.getManagers().get(1).getUsername());
 	}
 
 	@Test
 	public void testAddRestaurant() {
-		john.addRestaurant("ru", "le Ru", new Coordinates(10, 10.5));
+		john.addRestaurant("ru", "le Ru", new Coordinates(10, 10.5), "aa");
 		assertEquals("ru", sys.getRestaurants().get(0).getUsername());
 	}
 
 	@Test
 	public void testAddCourier() {
-		john.addCourier("jodev", "Jo", "Dev", 000111222);
+		john.addCourier("jodev", "Jo", "Dev", 000111222, "aa");
 		assertEquals("jodev", sys.getCouriers().get(0).getUsername());
 	}
 
 	@Test
 	public void testAddCustomer() {
-		john.addCustomer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012);
+		john.addCustomer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa");
 		assertEquals("antho", sys.getCustomers().get(0).getUsername());
 	}
 
 	@Test
 	public void testRemoveUser() {
-		Manager antoine = john.addManager("Me Q", "Antoine", "Crepel");
-		Restaurant ru = john.addRestaurant("ru", "le ru", new Coordinates(10, 10.5));
-		Courier jodev = john.addCourier("jodev", "Jo", "Dev", 000111222);
-		Customer antho = john.addCustomer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012);
+		Manager antoine = john.addManager("Me Q", "Antoine", "Crepel", "aa");
+		Restaurant ru = john.addRestaurant("ru", "le ru", new Coordinates(10, 10.5), "aa");
+		Courier jodev = john.addCourier("jodev", "Jo", "Dev", 000111222, "aa");
+		Customer antho = john.addCustomer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa");
 		
 		john.removeUser(antoine);
 		john.removeUser(ru);
@@ -58,7 +58,7 @@ public class ManagerTest {
 	
 	@Test
 	public void testTotalIncome() {
-		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
 		Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
 		
 		john.setDeliveryCost(1);
@@ -93,7 +93,7 @@ public class ManagerTest {
 	@Test
 	public void testTotalProfit() {
 		
-		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
 		Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
 		
 		john.setDeliveryCost(1);
@@ -120,13 +120,13 @@ public class ManagerTest {
 		Calendar tomorrow = Calendar.getInstance();
 		tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 		
-		assertEquals(4.42, john.computeTotalProfit(oneMonthAgo, tomorrow), 1e-6);
+		assertEquals(4.42, john.computeProfit(oneMonthAgo, tomorrow), 1e-6);
 		
 	}
 	
 	@Test
 	public void testMostLeastSellingRestaurant(){
-		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
 		Restaurant ru1 = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
 		Restaurant ru2 = new Restaurant("le ru 2", "Ru", new Coordinates(0, 0), sys);
 		Restaurant ru3 = new Restaurant("le ru 3", "Ru", new Coordinates(0, 0), sys);
@@ -145,19 +145,22 @@ public class ManagerTest {
 	
 	@Test
 	public void testMostLeastActiveCourier(){
-		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
 		Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
-		Courier jodev = new Courier("jodev", "Joseph", "Dev", 000111222, sys);
-		Courier alex = new Courier("alex", "Alex", "Dela", 012012012, sys);
-		Courier yvan = new Courier("vania", "Yvan", "Romich", 012012012, sys);
+		Courier jodev = new Courier("jodev", "Joseph", "Dev", 000111222, "aa", sys);
+		Courier alex = new Courier("alex", "Alex", "Dela", 012012012, "aa", sys);
+		Courier yvan = new Courier("vania", "Yvan", "Romich", 012012012, "aa", sys);
 		
 		Order a = Order.exampleOfOrder(antho, ru, sys);
 		Order b = Order.exampleOfOrder(antho, ru, sys);
 		Order c = Order.exampleOfOrder(antho, ru, sys);
 		
 		jodev.acceptDelivery(a);
+		jodev.endDelivery();
 		jodev.acceptDelivery(b);
+		jodev.endDelivery();
 		alex.acceptDelivery(c);
+		alex.endDelivery();
 		
 		assertEquals(jodev, john.mostActiveCourier());
 		assertEquals(yvan, john.leastActiveCourier());
@@ -165,9 +168,9 @@ public class ManagerTest {
 	
 	@Test
 	public void testAverageIncome(){
-		Customer antho1 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
-		Customer antho2 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
-		Customer antho3 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Customer antho1 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
+		Customer antho2 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
+		Customer antho3 = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
 		Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
 		
 		
@@ -189,7 +192,7 @@ public class ManagerTest {
 	
 	@Test
 	public void testActivateInactivateUser(){
-		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
 		assertEquals(1, sys.getCustomers().size());
 		assertEquals(0, sys.getInactiveUsers().size());
 		

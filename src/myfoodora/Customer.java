@@ -28,8 +28,8 @@ public class Customer extends User implements Observer, java.io.Serializable {
 		sys.addUser(this);
 	}
 	
-	public Customer(String username, String name, String surname, Coordinates address, String email, long phoneNumber, MyFoodora sys){
-		super(username, sys);
+	public Customer(String username, String name, String surname, Coordinates address, String email, long phoneNumber, String password, MyFoodora sys){
+		super(username, password, sys);
 		this.name = name;
 		this.surname = surname;
 		this.address = address;
@@ -53,7 +53,7 @@ public class Customer extends User implements Observer, java.io.Serializable {
 	}
 	
 	public void receiveConfirmation(Order o){
-		messages.add("The order is confirmed and will be prepared soon.");
+		System.out.println("The order is confirmed and will be prepared soon.");
 		historyOfOrders.add(o);
 	}
 	
@@ -69,9 +69,9 @@ public class Customer extends User implements Observer, java.io.Serializable {
 	public String lastMessages(){
 		String result = "";
 		for(String m : messages){
-			result += m;
-			messages.remove(m);
+			result += m + "\n";
 		}
+		messages.removeAll(messages);
 		return result;
 	}
 	

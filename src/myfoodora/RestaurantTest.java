@@ -10,7 +10,7 @@ import org.junit.Test;
 public class RestaurantTest {
 	MyFoodora sys = new MyFoodora();
 	Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(1,1), sys);
-	Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
+	Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, "aa", sys);
 
 	
 	@Test

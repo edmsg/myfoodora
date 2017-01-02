@@ -10,6 +10,7 @@ public class Order implements java.io.Serializable {
 	private MyFoodora sys;
 	private ArrayList<Item> items;
 	private ArrayList<Meal> meals;
+	private String name;
 	private Customer customer;
 	private Restaurant restaurant;
 	private Courier courier = null; //initially no courier ; updated when a courier is defined
@@ -19,6 +20,7 @@ public class Order implements java.io.Serializable {
 	private Calendar date;
 	
 	public Order(ArrayList<Item> items, ArrayList<Meal> meals, Customer customer, Restaurant restaurant, MyFoodora sys){
+		
 		this.items = items;
 		this.meals = meals;
 		this.customer = customer;
@@ -28,6 +30,7 @@ public class Order implements java.io.Serializable {
 		
 		this.dueToRestaurant = computeDueToRestaurant();
 		this.price = computeCost();
+		this.name = customer.getUsername() + restaurant.getUsername() + price;
 	}
 	
 	public double computeDueToRestaurant(){
@@ -55,11 +58,20 @@ public class Order implements java.io.Serializable {
 	public double computeCost(){
 
 		double total = this.dueToRestaurant*(1 + sys.getMarkupPercentage()) + sys.getServiceFee(); 
+		return total;
+	}
+	
+	/**
+	 * Computes the cost of the order, taking in account the fidelity cards.
+	 * This has to be performed only once, when the order is confirmed.
+	 */
+	public void computeFinalPrice(){
+		double total = this.dueToRestaurant*(1 + sys.getMarkupPercentage()) + sys.getServiceFee(); 
 		double totalWithRed = customer.getFidelityCard().computeNewPrice(total);
 		
 		discountDueToCards = total - totalWithRed;
 		
-		return totalWithRed;
+		price = totalWithRed;
 	}
 	
 	public void addItemToOrder(Item i){
@@ -173,6 +185,11 @@ public class Order implements java.io.Serializable {
 	public void setCourier(Courier courier) {
 		this.courier = courier;
 	}
+
+	public String getName() {
+		return name;
+	}
+	
 	
 	
 }

@@ -45,30 +45,19 @@ public class MyFoodora implements Observable, java.io.Serializable {
 	
 	
 	public void newOrder(Order o){
-		/**
-		 * - transmit to restaurant
-		 * - search for an available courier
-		 * - receive ok from courier
-		 * - confirms customer
-		 * OK - save to history
-		 */
 		
 		Courier c = findAvailableCourier(o);
 		
 		if(c != null){
+			//System.out.println(c.getUsername());
 			o.setCourier(c);
 			historyOfOrders.add(o);
 			o.getRestaurant().receiveOrder(o);
 			o.getCustomer().receiveConfirmation(o);
 		}
 		else{
-			//No available courier
-			//TODO : wait until an available one is found
-			System.out.println("No courier avalaible !");
-			
+			System.out.println("No courier avalaible ! Try again later.");
 		}
-		
-		
 	}
 	
 	

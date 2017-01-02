@@ -29,22 +29,22 @@ public class Manager extends User implements java.io.Serializable{
 		sys.addUser(this); //the manager is automatically added to the manager list of the system
 	}
 	
-	public Manager addManager(String username, String name, String surname){
-		return new Manager(username, name, surname, getSys()); //the manager is automatically added to the system through its construction : no need to add it a second time
+	public Manager addManager(String username, String name, String surname, String password){
+		return new Manager(username, name, surname, password, getSys()); //the manager is automatically added to the system through its construction : no need to add it a second time
 	}
 	
-	public Restaurant addRestaurant(String username, String name, Coordinates address){
-		Restaurant r = new Restaurant(username, name, address, getSys());
+	public Restaurant addRestaurant(String username, String name, Coordinates address, String password){
+		Restaurant r = new Restaurant(username, name, address, password, getSys());
 		return r;
 	}
 	
-	public Courier addCourier(String username, String name, String surname, long phoneNumber){
-		Courier c = new Courier(username, name, surname, phoneNumber, getSys());
+	public Courier addCourier(String username, String name, String surname, long phoneNumber, String password){
+		Courier c = new Courier(username, name, surname, phoneNumber, password, getSys());
 		return c;
 	}
 	
-	public Customer addCustomer(String username, String name, String surname, Coordinates address, String email, long phoneNumber){
-		Customer c = new Customer(username, name, surname, address, email, phoneNumber, getSys());
+	public Customer addCustomer(String username, String name, String surname, Coordinates address, String email, long phoneNumber, String password){
+		Customer c = new Customer(username, name, surname, address, email, phoneNumber, password, getSys());
 		return c;
 	}
 	
@@ -70,7 +70,7 @@ public class Manager extends User implements java.io.Serializable{
 	/**
 	 * Computes the total profit, between dates start and stop
 	 */
-	public double computeTotalProfit(Calendar start, Calendar stop){
+	public double computeProfit(Calendar start, Calendar stop){
 		
 		ArrayList<Order> historyOfOrder = this.getSys().getHistoryOfOrders();
 		double profit = 0;
@@ -83,11 +83,37 @@ public class Manager extends User implements java.io.Serializable{
 	}
 	
 	/**
+	 * Computes the total profit since the system was created
+	 */
+	public double computeTotalProfit(){
+		ArrayList<Order> historyOfOrder = this.getSys().getHistoryOfOrders();
+		double profit = 0;
+		for(Order o : historyOfOrder){
+			profit += getSys().getMarkupPercentage()*o.getDueToRestaurant() + getSys().getServiceFee() - getSys().getDeliveryCost() - o.getDiscountDueToCards();
+		}
+		return profit;
+	}
+	
+	/**
 	 * Find and return the restaurant in the database which completed the most orders
 	 */
 	public Restaurant mostSellingRestaurant(){
 		Restaurant best = getSys().getRestaurants().get(0); //initialisation with the first restaurant
 		for(Restaurant r : getSys().getRestaurants()){
+			if(r.getCounter() > best.getCounter()){
+				best = r;
+			}
+		}
+		return best;
+	}
+	
+	
+	/**
+	 * same as precedent, but instead of searching in the whole restaurant list, we only search in the specified collection
+	 */
+	public Restaurant mostSellingRestaurant(ArrayList<Restaurant> restaurants){
+		Restaurant best = restaurants.get(0); //initialisation with the first restaurant
+		for(Restaurant r : restaurants){
 			if(r.getCounter() > best.getCounter()){
 				best = r;
 			}
@@ -109,11 +135,41 @@ public class Manager extends User implements java.io.Serializable{
 	}
 	
 	/**
+	 * @return the list of restaurants sorted w.r.t. the number of orders completed
+	 */
+	
+	public String listRestaurantsSortedOrders(){
+		String res = "";
+		ArrayList<Restaurant> toDisplay = new ArrayList<>();
+		toDisplay.addAll(getSys().getRestaurants());
+		while(!toDisplay.isEmpty()){
+			Restaurant r = mostSellingRestaurant(toDisplay);
+			res += r.getUsername() + " (" + r.getCounter() + ")\n";
+			toDisplay.remove(r);
+		}
+		return res;
+	}
+	
+	
+	/**
 	 * Find and return the most active courier in the fleet
 	 */
 	public Courier mostActiveCourier(){
 		Courier best = getSys().getCouriers().get(0); //initialisation with the first courier
 		for(Courier c : getSys().getCouriers()){
+			if(c.getCounter() > best.getCounter()){
+				best = c;
+			}
+		}
+		return best;
+	}
+	
+	/**
+	 * same as precedent, but instead of searching in the whole fleet, we only search in the specified collection
+	 */
+	public Courier mostActiveCourier(ArrayList<Courier> couriers){
+		Courier best = couriers.get(0);  //initialisation with the first courier
+		for(Courier c : couriers){
 			if(c.getCounter() > best.getCounter()){
 				best = c;
 			}
@@ -132,6 +188,21 @@ public class Manager extends User implements java.io.Serializable{
 			}
 		}
 		return best;
+	}
+	
+	/**
+	 * @return list of couriers sorted w.r.t. the number of deliveries they performed
+	 */
+	public String listCouriersSortedDeliveries(){
+		String res = "";
+		ArrayList<Courier> toDisplay = new ArrayList<>();
+		toDisplay.addAll(getSys().getCouriers());
+		while(!toDisplay.isEmpty()){
+			Courier c = mostActiveCourier(toDisplay);
+			res += c.getUsername() + " (" + c.getCounter() + ")\n";
+			toDisplay.remove(c);
+		}
+		return res;
 	}
 	
 	public double computeAverageIncomePerCustomer(){

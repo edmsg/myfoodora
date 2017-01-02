@@ -10,7 +10,7 @@ public class FidelityCardTest {
 	
 	@Test
 	public void testCreateBasicFidelityCard() {
-		FidelityCard card = FidelityCardFactory.createFidelityCard("basic fidelity card");
+		FidelityCard card = FidelityCardFactory.createFidelityCard("basic");
 		
 		assertEquals(10, card.computeNewPrice(10), 1e-6);
 	}
@@ -18,7 +18,7 @@ public class FidelityCardTest {
 	@Test
 	public void testCreateLotteryFidelityCard() {
 		
-		FidelityCard card = FidelityCardFactory.createFidelityCard ("lottery fidelity card");
+		FidelityCard card = FidelityCardFactory.createFidelityCard("lottery");
 		double newPrice = card.computeNewPrice(10);
 		if(newPrice == 0){
 			System.out.println("The order was earned for free");
@@ -33,7 +33,7 @@ public class FidelityCardTest {
 	
 	@Test
 	public void testPointFidelityCard() {
-		FidelityCard card = FidelityCardFactory.createFidelityCard ("point fidelity card");
+		FidelityCard card = FidelityCardFactory.createFidelityCard ("point");
 		
 		double p1 = card.computeNewPrice(1020);
 		double p2 = card.computeNewPrice(100);

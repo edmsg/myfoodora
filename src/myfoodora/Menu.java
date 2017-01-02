@@ -145,15 +145,15 @@ public class Menu implements java.io.Serializable{
 	public String menuText(){
 		String s = "Starters :\n";
 		for(Item i : starters){
-			s += i.getName() + "\n";
+			s += i.getName() + " (" + i.getPrice() + ")\n";
 		}
 		s += "Main Dishes :\n";
 		for(Item i : mainDishes){
-			s += i.getName() + "\n";
+			s += i.getName() + " (" + i.getPrice() + ")\n";
 		}
 		s += "Desserts :\n";
 		for(Item i : desserts){
-			s += i.getName() + "\n";
+			s += i.getName() + " (" + i.getPrice() +  ")\n";
 		}
 		//add meals
 		s += "\nMeals :";
@@ -162,6 +162,7 @@ public class Menu implements java.io.Serializable{
 			for(Item i : m.getItems()){
 				s += i.getName() + " ";
 			}
+			s += " (" + m.getPrice() + ")";
 		}
 		
 		return s;
