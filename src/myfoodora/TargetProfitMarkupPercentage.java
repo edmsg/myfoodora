@@ -37,7 +37,7 @@ public class TargetProfitMarkupPercentage implements ProfitPolicy, java.io.Seria
 		}
 		double markupPercentage = (targetProfit + sumDiscounts - N*(sys.getServiceFee() - sys.getDeliveryCost()))/(sumPriceOfOrders);
 		
-		sys.setDeliveryCost(markupPercentage);
+		sys.setMarkupPercentage(markupPercentage);
 	}
 	
 

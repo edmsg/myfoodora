@@ -14,7 +14,7 @@ public class LotteryFidelityCard implements FidelityCard, java.io.Serializable{
 	public double computeNewPrice (double price){
 		
 		double nbAleatoire = Math.random();
-		double p = 0.5;
+		double p = 0.05;
 		if (nbAleatoire <= p){
 			price = 0;
 		}

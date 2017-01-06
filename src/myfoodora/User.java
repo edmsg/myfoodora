@@ -2,7 +2,7 @@ package myfoodora;
 
 import java.rmi.server.UID;
 
-public class User implements java.io.Serializable {
+public abstract class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 6539345742582256678L;
 	

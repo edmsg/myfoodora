@@ -1,0 +1,70 @@
+login ceo 123456789
+registerRestaurant MacDonalds mcdo 123 123 domac
+y
+registerRestaurant TourDArgent tda 341 21 pw
+y
+registerRestaurant RestaurantUniversitaire ru 0 0 azerty
+y
+registerCustomer Benjamin Terris ben 100 100 salut
+benjamin.terris@student.ecp.fr
+0673578790
+y
+y
+registerCustomer Antoine Crepel ant 321 76 bjr
+skip
+skip
+n
+y
+registerCustomer Anthony Gauvan anto 35 67 poucav
+skip
+0686479635
+y
+y
+registerCourier Joseph Devianne jodev 56 87 0687542679 fermla
+y
+registerCourier Yvan Rome vania 576 224 0657542356 romich
+y
+registerCourier Alex Delalande alex 678 975 0685345678 alexo
+y
+showRestaurants
+showCustomers
+logout
+login mcdo domac
+addDish salad s 2.5 vegetarian
+addDish bigMac m 6
+addDish mcChicken m 6
+addDish royalCheese m 7
+addDish fries m 2 vegetarian
+addDish potatoes m 2 vegetarian
+addDish mcFlurry d 3
+createMeal bigMacMenu bigMac fries
+createMeal maxiBestOf royalCheese potatoes mcFlurry
+setSpecialOffer bigMacMenu
+showMenu
+logout
+login tda pw
+addDish potatoeSalad s 15 vegetarian homemade
+addDish foieGras s 30
+addDish duck m 45 homemade glutenFree
+addDish carpe m 40 homemade
+addDish flan d 15 homemade
+addDish coffee d 5
+createMeal complet foieGras duck coffee
+createMeal midi carpe flan
+setSpecialOffer midi
+showMenu
+logout
+login ru azerty
+addDish saucisson s 1
+addDish pomelo s 1 glutenFree vegetarian
+addDish rice m 1.25 vegetarian
+addDish chicken m 1.25
+addDish cheese d 1
+addDish apple d 1 glutenFree vegetarian
+createMeal classique saucisson chicken apple
+createMeal veg pomelo rice apple
+setSpecialOffer veg
+showMenu
+logout
+quit
+y

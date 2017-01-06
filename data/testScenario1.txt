@@ -1,0 +1,287 @@
+# 0 : login as manager
+login ceo 123456789
+# 1 : Registration of a few restaurants :
+registerRestaurant MacDonalds mcdo 123 123 domac
+y
+registerRestaurant TourDArgent tda 341 21 pw
+y
+registerRestaurant RestaurantUniversitaire ru 0 0 azerty
+y
+# 2 : registration of a few customers :
+registerCustomer Antoine Crepel ant 321 76 bjr
+skip
+skip
+n
+y
+registerCustomer Benjamin Terris ben 100 100 salut
+benjamin.terris@student.ecp.fr
+0673578790
+y
+y
+registerCustomer Anthony Gauvan anto 35 67 poucav
+skip
+0686479635
+y
+y
+# 3 : resgistration of a few couriers :
+registerCourier Joseph Devianne jodev 1 1 0687542679 fermla
+y
+registerCourier Yvan Rome vania 576 224 0657542356 romich
+y
+registerCourier Alex Delalande alex 678 975 0685345678 alexo
+y
+login jodev fermla
+onDuty
+logout
+login vania romich
+onDuty
+logout
+login alex alexo
+onDuty
+logout
+login ceo 123456789
+showRestaurants
+showCustomers
+associateCard ben point
+logout
+# 4 : creation of the menu of our 3 restaurants :
+login mcdo domac
+addDish salad s 2.5 vegetarian
+addDish bigMac m 6
+addDish mcChicken m 6
+addDish royalCheese m 7
+addDish fries m 2 vegetarian
+addDish potatoes m 2 vegetarian
+addDish mcFlurry d 3
+createMeal bigMacMenu bigMac fries
+createMeal maxiBestOf royalCheese potatoes mcFlurry
+setSpecialOffer bigMacMenu
+showMenu
+logout
+login tda pw
+addDish potatoeSalad s 15 vegetarian homemade
+addDish foieGras s 30
+addDish duck m 45 homemade glutenFree
+addDish carpe m 40 homemade
+addDish flan d 15 homemade
+addDish coffee d 5
+createMeal complet foieGras duck coffee
+createMeal midi carpe flan
+setSpecialOffer midi
+showMenu
+logout
+login ru azerty
+addDish saucisson s 1
+addDish pomelo s 1 glutenFree vegetarian
+addDish rice m 1.25 vegetarian
+addDish chicken m 1.25
+addDish cheese d 1
+addDish apple d 1 glutenFree vegetarian
+createMeal classique saucisson chicken apple
+createMeal veg pomelo rice apple
+setSpecialOffer veg
+showMenu
+logout
+# 5 : placing a few orders :
+login anto poucav
+selectRestaurant mcdo
+startOrder
+addMeal2Order bigMacMenu
+endOrder
+y
+logout
+login ant bjr
+selectRestaurant tda
+startOrder
+addDish2Order duck
+addDish2Order flan
+endOrder
+y
+logout
+login ben salut
+selectRestaurant ru
+startOrder
+addMeal2Order veg
+endOrder
+y
+login jodev fermla
+deliveryFinished
+logout
+login vania romich
+deliveryFinished
+logout
+login alex alexo
+deliveryFinished
+logout
+# 6 : computation of the profit since creation, and between dates 03/01/2017 and 27/02/2017
+login ceo 123456789
+showTotalProfit
+showTotalProfit 03012017 27022017
+# changing the profit policy and computing again the profit (which won't change, because changing the profit policy will only affect future orders)
+setProfitPolicy markupPercentage 10
+showTotalProfit
+showTotalProfit 03012017 27022017
+logout
+# 7 : adding another order
+login ben salut
+selectRestaurant mcdo
+startOrder
+addMeal2Order bigMacMenu
+endOrder
+y
+login jodev fermla
+deliveryFinished
+logout
+login vania romich
+deliveryFinished
+logout
+login alex alexo
+deliveryFinished
+logout
+# 8 : testing the display of restaurants and couriers w.r.t the number of orders prepared/delivered
+login ceo 123456789
+showCouriersDeliveries
+showRestaurantTop
+logout
+# 9 : testing the deletion of meals and dishes
+login ru azerty
+addDish aaa d 1
+createMeal errorTest aaa rice
+removeMeal errorTest
+createMeal errorTest2 aaa rice
+removeDish aaa
+y
+logout
+# 10 : testing the change of special offers and notification to clients registered
+login ant bjr
+receiveSpecialOffers
+logout
+login ben salut
+stopReceivingSpecialOffers
+logout
+login ru azerty
+removeFromSpecialOffer veg
+setSpecialOffer classique
+logout
+login ant bjr
+logout
+login ben salut
+logout
+# 11 : testing the completion of an order by a restaurant
+login ant bjr
+selectRestaurant ru
+startOrder
+addMeal2Order veg
+endOrder
+y
+logout
+login ru azerty
+showOrdersToComplete
+setOrderCompleted benru5.2
+setOrderCompleted antru5.3
+showOrdersToComplete
+# 12 : Test the on/off duty of couriers, and findDeliverer function
+login jodev fermla
+deliveryFinished
+offDuty
+logout
+login vania romich
+deliveryFinished
+onDuty
+logout
+login alex alexo
+deliveryFinished
+offDuty
+logout
+login ben salut
+selectRestaurant ru
+startOrder
+logout
+login ru azerty
+# now the only deliverer available is vania :
+findDeliverer
+logout
+login ben salut
+endOrder
+y
+logout
+login vania romich
+deliveryFinished
+logout
+# 13 : test incativate/activate/remove user
+login ceo 123456789
+registerCourier Louis Gradt lg 56 87 0687542679 fermla
+y
+inactivateUser lg
+showUsers
+activateUser lg
+showUsers
+removeUser lg
+showUsers
+# 14 : test setDeliveryPolicy
+login jodev fermla
+onDuty
+setPosition 1 1
+logout
+login vania romich
+onDuty
+setPosition 100 100
+logout
+login alex alexo
+onDuty
+setPosition 200 200
+logout
+login ben salut
+selectRestaurant ru
+startOrder
+logout
+login ceo 123456789
+setDeliveryPolicy fastest
+logout
+login ru azerty
+# Here, the closest courier from the ru is jodev, so the deliverer found is jodev
+findDeliverer
+logout
+login ceo 123456789
+setDeliveryPolicy fair
+showCouriersDeliveries
+logout
+login ru azerty
+# here, the courier who have performed the least deliveries is alex, so the deliverer found is alex
+findDeliverer
+logout
+login ben salut
+endOrder
+y
+logout
+# 15 : test of the sorting of shipped orders
+login ceo 123456789
+setSortingPolicy items
+showMenuItem ru
+showMenuItem tda
+setSortingPolicy halfMeal reverse
+showMenuItem ru
+showMenuItem tda
+# 16 : test fidelity card : ben has a point-based fidelity card, we can see the number of points recorded on it, and then change the fidelity card
+logout
+login ben salut
+showStatus
+logout
+login ceo 123456789
+associateCard ben lottery
+logout
+login ben salut
+showStatus
+selectRestaurant ru
+startOrder
+addMeal2Order classique
+endOrder
+y
+logout
+quit
+n
+
+
+
+
+

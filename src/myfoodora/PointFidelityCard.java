@@ -19,7 +19,7 @@ public class PointFidelityCard implements FidelityCard, java.io.Serializable {
 			points -= 100;
 		}
 		
-		points += (int) price/10;
+		points += (int) price;
 		
 		return price;
 	}
@@ -27,5 +27,10 @@ public class PointFidelityCard implements FidelityCard, java.io.Serializable {
 	public void setPoints(int points){
 		this.points = points;
 	}
+
+	public int getPoints() {
+		return points;
+	}
+	
 	
 } 

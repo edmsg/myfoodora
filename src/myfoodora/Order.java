@@ -15,12 +15,13 @@ public class Order implements java.io.Serializable {
 	private Restaurant restaurant;
 	private Courier courier = null; //initially no courier ; updated when a courier is defined
 	private double price;
+	private double profit;
 	private double dueToRestaurant;
 	private double discountDueToCards;
 	private Calendar date;
 	
 	public Order(ArrayList<Item> items, ArrayList<Meal> meals, Customer customer, Restaurant restaurant, MyFoodora sys){
-		
+		this.profit = 0;
 		this.items = items;
 		this.meals = meals;
 		this.customer = customer;
@@ -30,7 +31,7 @@ public class Order implements java.io.Serializable {
 		
 		this.dueToRestaurant = computeDueToRestaurant();
 		this.price = computeCost();
-		this.name = customer.getUsername() + restaurant.getUsername() + price;
+		this.name = customer.getUsername() + restaurant.getUsername() + "Unfinished...";
 	}
 	
 	public double computeDueToRestaurant(){
@@ -72,6 +73,14 @@ public class Order implements java.io.Serializable {
 		discountDueToCards = total - totalWithRed;
 		
 		price = totalWithRed;
+		
+		name = customer.getUsername() + restaurant.getUsername() + Double.toString(price).substring(0,3);
+		
+		computeProfit();
+	}
+	
+	public void computeProfit(){
+		this.profit = sys.getMarkupPercentage()*this.dueToRestaurant + sys.getServiceFee() - sys.getDeliveryCost() - discountDueToCards;
 	}
 	
 	public void addItemToOrder(Item i){
@@ -189,7 +198,10 @@ public class Order implements java.io.Serializable {
 	public String getName() {
 		return name;
 	}
-	
+
+	public double getProfit() {
+		return profit;
+	}
 	
 	
 }

@@ -76,7 +76,7 @@ public class Manager extends User implements java.io.Serializable{
 		double profit = 0;
 		for(Order o : historyOfOrder){
 			if(start.before(o.getDate()) && stop.after(o.getDate())){
-				profit += getSys().getMarkupPercentage()*o.getDueToRestaurant() + getSys().getServiceFee() - getSys().getDeliveryCost() - o.getDiscountDueToCards();
+				profit += o.getProfit();
 			}
 		}
 		return profit;
@@ -89,7 +89,7 @@ public class Manager extends User implements java.io.Serializable{
 		ArrayList<Order> historyOfOrder = this.getSys().getHistoryOfOrders();
 		double profit = 0;
 		for(Order o : historyOfOrder){
-			profit += getSys().getMarkupPercentage()*o.getDueToRestaurant() + getSys().getServiceFee() - getSys().getDeliveryCost() - o.getDiscountDueToCards();
+			profit += o.getProfit();
 		}
 		return profit;
 	}

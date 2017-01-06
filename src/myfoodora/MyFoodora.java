@@ -198,6 +198,16 @@ public class MyFoodora implements Observable, java.io.Serializable {
 		
 	}
 	
+	public User lookForInactiveUser(String username){
+		for(User u : inactiveUsers){
+			if(u.getUsername().equals(username)){
+				return u;
+			}
+		}
+		System.out.println(username + " was not found in the users.");
+		return null;
+	}
+	
 	public ArrayList<Manager> getManagers() {
 		return managers;
 	}

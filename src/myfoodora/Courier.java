@@ -1,5 +1,9 @@
 package myfoodora;
 
+/**
+ * The couriers of the system, who are in charge of deliveries
+ *
+ */
 public class Courier extends User implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 4922340959316128316L;
@@ -37,12 +41,15 @@ public class Courier extends User implements java.io.Serializable{
 		isAvailable = false;
 	}
 	
-	public void endDelivery(){
+	public boolean endDelivery(){
+		boolean deliveryCompleted = false;
 		if(orderInDelivery != null){
 			counter ++;
 			orderInDelivery = null;
+			deliveryCompleted = true;
 		}
 		isAvailable = true;
+		return deliveryCompleted;
 	}
 	
 	

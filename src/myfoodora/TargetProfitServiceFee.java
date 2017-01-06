@@ -34,7 +34,7 @@ public class TargetProfitServiceFee implements ProfitPolicy, java.io.Serializabl
 		}
 		double serviceFee = sys.getDeliveryCost() + (targetProfit - sum)/N;
 		
-		sys.setDeliveryCost(serviceFee);
+		sys.setServiceFee(serviceFee);
 	}
 	
 }

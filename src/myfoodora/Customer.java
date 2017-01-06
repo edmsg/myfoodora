@@ -2,6 +2,10 @@ package myfoodora;
 
 import java.util.ArrayList;
 
+/**
+ * The customers of the system place orders and pays them
+ *
+ */
 public class Customer extends User implements Observer, java.io.Serializable {
 	
 	private static final long serialVersionUID = -2271603740213650215L;
@@ -121,6 +125,19 @@ public class Customer extends User implements Observer, java.io.Serializable {
 	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public Coordinates getAddress() {
+		return address;
+	}
+	
 	
 	
 }
