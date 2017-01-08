@@ -6,7 +6,6 @@ public class LoadSave {
 	
 	public static void saveSys(MyFoodora sys){
 		try{
-			//FileOutputStream fos = new FileOutputStream("/../../data/myFoo.ser");
 			FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "/data/myFoo.ser");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			
@@ -25,7 +24,6 @@ public class LoadSave {
 		MyFoodora sys = null;
 		
 		try{
-			//FileInputStream fis = new FileInputStream("/../../data/myFoo.ser");
 			FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/data/myFoo.ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			

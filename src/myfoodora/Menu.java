@@ -79,10 +79,11 @@ public class Menu implements java.io.Serializable{
 		}
 	}
 	
+	/**
+	 * This function finds where is located the item in the menu and removes it.
+	 */
 	public void removeItem(Item i){
-		/**
-		 * This function finds where is located the item in the menu and removes it.
-		 */
+		
 		if(starters.contains(i)){
 			starters.remove(i);
 		}

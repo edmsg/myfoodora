@@ -19,23 +19,7 @@ public class CommandLineUserInterface {
 	}
 	
 	public static void run(){
-		/*
-		//<START> TO BE MODIFIED :
 		
-		MyFoodora sys = new MyFoodora();
-		Courier jodev = new Courier("jodev", "Joseph", "Dev", 000111222, sys);
-		Courier alex = new Courier("alex", "Alex", "Dela", 012012012, sys);
-		Courier yvan = new Courier("vania", "Yvan", "Romich", 012012012, sys);
-		Restaurant ru = new Restaurant("le ru", "Ru", new Coordinates(0, 0), sys);
-		Customer antho = new Customer("antho", "Antho", "Gauv", new Coordinates(3, 3), "antho@1E.com", 012012012, sys);
-		Manager antoine = new Manager("Me Q", "Antoine", "Cr", sys);
-		
-		alex.setPassword("bonjour");
-		
-		//<END> TO BE MODIFIED
-		*/
-		
-		//MyFoodora sys = null; //TODO : load from serialized !
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -48,7 +32,6 @@ public class CommandLineUserInterface {
 		
 		MyFoodora sys = LoadSave.loadSys();
 		
-		//Manager john = new Manager("john", "john", "doe", "aa", sys);
 		
 		System.out.println("Welcome to myFoodora. Type a command.");
 		
